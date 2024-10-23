@@ -1,0 +1,8 @@
+# Enironvars
+.env
+
+# Build files
+target
+
+# IntelliJ
+.idea

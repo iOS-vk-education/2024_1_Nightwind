@@ -1,0 +1,74 @@
+package com.nightwind.wp.service;
+
+import com.nightwind.wp.ConfigProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Service;
+import com.nightwind.wp.domain.Post;
+import com.nightwind.wp.domain.User;
+import com.nightwind.wp.form.WritePostForm;
+import com.nightwind.wp.repository.PostRepository;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PostService {
+    private final ConfigProperties configProperties;
+
+    private final PostRepository postRepository;
+
+    public PostService(ConfigProperties configProperties,
+                       PostRepository postRepository) {
+        this.configProperties = configProperties;
+        this.postRepository = postRepository;
+    }
+
+    public Post findById(long id) {
+        return postRepository.findById(id).orElse(null);
+    }
+
+    public List<Post> findAll() {
+        return postRepository.findAllByOrderByCreationTimeDesc();
+    }
+
+    public Post writePost(WritePostForm form, User author) throws IOException {
+        Post post = new Post();
+        post.setTitle(form.getTitle());
+        post.setText(form.getText());
+        post.setMedia(saveMediaAndGetKeys(form.getMedia(), post.getId() + "_"));
+        post.setUser(author);
+
+        this.postRepository.save(post);
+
+        return post;
+    }
+
+    private List<String> saveMediaAndGetKeys(List<MultipartFile> media, String keyPrefix) throws IOException {
+        List<String> keys = new ArrayList<>();
+
+        if (media == null || media.isEmpty()) {
+            return keys;
+        }
+
+        for (int i = 0; i < media.size(); ++i) {
+            var file = media.get(i);
+
+            if (!file.isEmpty()) {
+                String key = keyPrefix + i;
+                Path path = Paths.get(configProperties.getMediaUploadDir(), key);
+                Files.write(path, file.getBytes());
+                keys.add(key);
+            }
+        }
+
+        return keys;
+    }
+}
