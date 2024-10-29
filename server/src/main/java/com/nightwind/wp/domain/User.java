@@ -6,11 +6,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "login"))
+@SuppressWarnings("unused")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +34,7 @@ public class User {
     private Date creationTime;
 
     @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+    private final List<Post> posts = new ArrayList<>();
 
     public long getId() {
         return id;

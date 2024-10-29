@@ -6,16 +6,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "config")
 public class ConfigProperties {
-    private String mediaUploadDir;
+    private String mediaDir;
     private String jwtSecret;
     private String shaSalt;
 
-    public String getMediaUploadDir() {
-        return mediaUploadDir;
+    public String getMediaDir() {
+        return mediaDir;
     }
 
-    public void setMediaUploadDir(String mediaUploadDir) {
-        this.mediaUploadDir = mediaUploadDir;
+    public void setMediaDir(String mediaDir) {
+        this.mediaDir = mediaDir;
     }
 
     public String getJwtSecret() {

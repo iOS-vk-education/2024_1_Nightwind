@@ -5,10 +5,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@SuppressWarnings("unused")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +20,6 @@ public class Post {
     @NotEmpty
     @Size(min = 1, max = 100)
     private String title;
-
 
     @NotEmpty
     @Size(min = 1, max = 10000)
@@ -32,7 +34,12 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @OrderBy("creationTime desc")
-    private List<Discussion> discussions;
+    private List<Discussion> discussions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private final List<Vote> votes = new ArrayList<>();
+
+    private long viewCount = 0;
 
     @CreationTimestamp
     private Date creationTime;
@@ -79,6 +86,18 @@ public class Post {
 
     public void setDiscussions(final List<Discussion> discussions) {
         this.discussions = discussions;
+    }
+
+    public long getVoteCount() {
+        return votes.size();
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void incrementViewCount() {
+        this.viewCount++;
     }
 
     public Date getCreationTime() {

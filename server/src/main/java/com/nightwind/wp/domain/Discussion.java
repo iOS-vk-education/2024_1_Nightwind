@@ -6,11 +6,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.util.Date;
 
-/** @noinspection unused*/
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(indexes = @Index(columnList = "creationTime"))
+@SuppressWarnings("unused")
 public class Discussion {
     @Id
     @GeneratedValue
@@ -25,7 +28,7 @@ public class Discussion {
     private Post post;
 
     @OneToOne
-    @JoinColumn(name = "parent_discussion_id", nullable = true)
+    @JoinColumn(name = "parent_discussion_id")
     private Discussion parentDiscussion;
 
     @NotNull
@@ -33,6 +36,9 @@ public class Discussion {
     @Size(min = 1, max = 65000)
     @Lob
     private String text;
+
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.ALL)
+    private final List<Vote> votes = new ArrayList<>();
 
     @CreationTimestamp
     private Date creationTime;
@@ -57,8 +63,8 @@ public class Discussion {
         this.post = post;
     }
 
-    public Discussion getParentDiscussion() {
-        return parentDiscussion;
+    public long getParentDiscussionId() {
+        return parentDiscussion.getId();
     }
 
     public void setParentDiscussion(Discussion parentDiscussion) {
@@ -71,6 +77,10 @@ public class Discussion {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public long getVoteCount() {
+        return votes.size();
     }
 
     public Date getCreationTime() {
