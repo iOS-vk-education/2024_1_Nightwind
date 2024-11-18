@@ -1,6 +1,6 @@
 package com.nightwind.wp.service;
 
-import com.nightwind.wp.ConfigProperties;
+import com.nightwind.wp.config.PropertiesConfig;
 import org.springframework.stereotype.Service;
 import com.nightwind.wp.domain.Post;
 import com.nightwind.wp.domain.User;
@@ -17,13 +17,13 @@ import java.util.List;
 
 @Service
 public class PostService {
-    private final ConfigProperties configProperties;
+    private final PropertiesConfig propertiesConfig;
 
     private final PostRepository postRepository;
 
-    public PostService(ConfigProperties configProperties,
+    public PostService(PropertiesConfig propertiesConfig,
                        PostRepository postRepository) {
-        this.configProperties = configProperties;
+        this.propertiesConfig = propertiesConfig;
         this.postRepository = postRepository;
     }
 
@@ -66,7 +66,7 @@ public class PostService {
         }
 
         // Get the directory path from config properties
-        Path uploadDir = Paths.get(configProperties.getMediaDir());
+        Path uploadDir = Paths.get(propertiesConfig.getMediaDir());
 
         // Ensure the directory exists
         if (!Files.exists(uploadDir)) {

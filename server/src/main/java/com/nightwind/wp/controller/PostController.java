@@ -83,7 +83,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved post"),
             @ApiResponse(responseCode = "404", description = "Post not found")
     })
-    @GetMapping(value = {"/post/{id}"})
+    @GetMapping(value = {"/posts/{id}"})
     public ResponseEntity<Post> findPost(
             @Parameter(description = "ID of the post to retrieve", required = true)
             @PathVariable long id) {
