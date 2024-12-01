@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.nightwind.wp.ConfigProperties;
+import com.nightwind.wp.config.PropertiesConfig;
 import org.springframework.stereotype.Service;
 import com.nightwind.wp.domain.User;
 import com.nightwind.wp.form.UserCredentialsRegister;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final ConfigProperties configProperties;
+    private final PropertiesConfig propertiesConfig;
 
     private final UserRepository userRepository;
 
@@ -24,12 +24,12 @@ public class UserService {
     private final JWTVerifier verifier;
 
     public UserService(
-            ConfigProperties configProperties,
+            PropertiesConfig propertiesConfig,
             UserRepository userRepository) {
-        this.configProperties = configProperties;
+        this.propertiesConfig = propertiesConfig;
         this.userRepository = userRepository;
 
-        this.algorithm = Algorithm.HMAC256(this.configProperties.getJwtSecret());
+        this.algorithm = Algorithm.HMAC256(this.propertiesConfig.getJwtSecret());
         this.verifier = JWT.require(algorithm).build();
     }
 
@@ -41,7 +41,7 @@ public class UserService {
         return login != null && password != null ?
                 userRepository.findByLoginAndPassword(login,
                         password,
-                        this.configProperties.getShaSalt()) : null;
+                        this.propertiesConfig.getShaSalt()) : null;
     }
 
     public User findById(Long id) {
@@ -80,7 +80,7 @@ public class UserService {
         userRepository.updatePasswordSha(user.getId(),
                                         userCredentials.getLogin(),
                                         userCredentials.getPassword(),
-                                        this.configProperties.getShaSalt());
+                                        this.propertiesConfig.getShaSalt());
         return user;
     }
 }

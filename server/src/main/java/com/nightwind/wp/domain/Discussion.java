@@ -63,8 +63,8 @@ public class Discussion {
         this.post = post;
     }
 
-    public long getParentDiscussionId() {
-        return parentDiscussion.getId();
+    public Long getParentDiscussionId() {
+        return parentDiscussion != null ? parentDiscussion.getId() : null;
     }
 
     public void setParentDiscussion(Discussion parentDiscussion) {
