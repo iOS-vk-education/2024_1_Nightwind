@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+final class PostService {
+    private let postRepository = PostRepository()
+
+    func getPosts() async throws -> [Post] {
+        return try await postRepository.get()
+    }
+}
+

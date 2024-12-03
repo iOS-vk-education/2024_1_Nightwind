@@ -10,14 +10,14 @@ import Foundation
 
 import Moya
 
-enum DiscussionRepository {
+enum DiscussionAPI {
     case getDiscussionsForPost(postId: Int)
     case createDiscussion(postId: Int, jwt: String, text: String, parentDiscussionId: Int?)
 }
 
-extension DiscussionRepository: TargetType {
+extension DiscussionAPI: TargetType {
     var baseURL: URL {
-        return URL(string: "http://rk.ermnvldmr.com/nightwind")!
+        return URL(string: "https://rk.ermnvldmr.com/nightwind")!
     }
     
     var path: String {

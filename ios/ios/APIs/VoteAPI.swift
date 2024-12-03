@@ -10,14 +10,14 @@ import Foundation
 
 import Moya
 
-enum VoteRepository {
+enum VoteAPI {
     case getPostVote(postId: Int, jwt: String)
     case votePost(postId: Int, jwt: String, upvote: Bool)
     case getDiscussionVote(discussionId: Int, jwt: String)
     case voteDiscussion(discussionId: Int, jwt: String, upvote: Bool)
 }
 
-extension VoteRepository: TargetType {
+extension VoteAPI: TargetType {
     var baseURL: URL {
         return URL(string: "https://rk.ermnvldmr.com/nightwind")!
     }
