@@ -15,4 +15,5 @@ struct Post: Codable {
     let viewCount: Int
     let creationTime: String
     let voteCount: Int
+    let disscussion: [Discussion]
 }
