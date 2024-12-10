@@ -7,9 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA2AC6D02CF6305900FE0144 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CF2CF6303F00FE0144 /* Lato-Black.ttf */; };
+		AA2AC6D12CF6305C00FE0144 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C82CF6303F00FE0144 /* Lato-BlackItalic.ttf */; };
+		AA2AC6D22CF6306000FE0144 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CA2CF6303F00FE0144 /* Lato-Bold.ttf */; };
+		AA2AC6D32CF6306500FE0144 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CC2CF6303F00FE0144 /* Lato-BoldItalic.ttf */; };
+		AA2AC6D42CF6306800FE0144 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CD2CF6303F00FE0144 /* Lato-Italic.ttf */; };
+		AA2AC6D52CF6306B00FE0144 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C72CF6303E00FE0144 /* Lato-Light.ttf */; };
+		AA2AC6D62CF6307000FE0144 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CE2CF6303F00FE0144 /* Lato-LightItalic.ttf */; };
+		AA2AC6D72CF6307300FE0144 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CB2CF6303F00FE0144 /* Lato-Regular.ttf */; };
+		AA2AC6D82CF6307600FE0144 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C42CF6303E00FE0144 /* Lato-Thin.ttf */; };
+		AA2AC6D92CF6307900FE0144 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C92CF6303F00FE0144 /* Lato-ThinItalic.ttf */; };
+		AA2AC6DA2CF6307D00FE0144 /* EBGaramond-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C52CF6303E00FE0144 /* EBGaramond-Italic.ttf */; };
+		AA2AC6DB2CF6308200FE0144 /* EBGaramond.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C62CF6303E00FE0144 /* EBGaramond.ttf */; };
+		AA74C62C2CF5EA8000CE4396 /* VoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C62B2CF5EA8000CE4396 /* VoteAPI.swift */; };
+		AA74C62E2CF5EAE800CE4396 /* PostAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C62D2CF5EAE800CE4396 /* PostAPI.swift */; };
+		AA74C6312CF5EBCE00CE4396 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6302CF5EBCE00CE4396 /* UserAPI.swift */; };
+		AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6322CF5EBF800CE4396 /* DiscussionAPI.swift */; };
+		AA74C6362CF5ED3E00CE4396 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = AA74C6352CF5ED3E00CE4396 /* CombineMoya */; };
+		AA74C6382CF5ED3E00CE4396 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = AA74C6372CF5ED3E00CE4396 /* Moya */; };
+		AA74C63A2CF5ED3E00CE4396 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = AA74C6392CF5ED3E00CE4396 /* ReactiveMoya */; };
+		AA74C63C2CF5ED3E00CE4396 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = AA74C63B2CF5ED3E00CE4396 /* RxMoya */; };
+		AA74C63F2CF5F92600CE4396 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C63E2CF5F92600CE4396 /* Styles.swift */; };
+		AA74C6422CF5F9CE00CE4396 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6412CF5F9CE00CE4396 /* InputField.swift */; };
+		AA74C6442CF5FAB600CE4396 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6432CF5FAB600CE4396 /* AuthView.swift */; };
+		AA74C6462CF5FC2D00CE4396 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6452CF5FC2D00CE4396 /* RegisterView.swift */; };
+		AA74C6492CF5FC8F00CE4396 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C6482CF5FC8F00CE4396 /* AuthViewModel.swift */; };
+		AA74C64C2CF5FCD200CE4396 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA74C64B2CF5FCD200CE4396 /* RegisterViewModel.swift */; };
 		AA7544962CCD4439001C77C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7544952CCD4439001C77C8 /* AppDelegate.swift */; };
 		AA7544982CCD4439001C77C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7544972CCD4439001C77C8 /* SceneDelegate.swift */; };
-		AA75449A2CCD4439001C77C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7544992CCD4439001C77C8 /* ViewController.swift */; };
+		AA75449A2CCD4439001C77C8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7544992CCD4439001C77C8 /* MainViewController.swift */; };
 		AA75449D2CCD4439001C77C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA75449B2CCD4439001C77C8 /* Main.storyboard */; };
 		AA75449F2CCD443A001C77C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA75449E2CCD443A001C77C8 /* Assets.xcassets */; };
 		AA7544A22CCD443A001C77C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA7544A02CCD443A001C77C8 /* LaunchScreen.storyboard */; };
@@ -21,13 +47,39 @@
 		AA7DA60D2CCD4DA60003CB53 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DA60C2CCD4DA60003CB53 /* Discussion.swift */; };
 		AA7DD17A2CD8069D0076166C /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DD1792CD8069D0076166C /* Vote.swift */; };
 		AA7DD17C2CD806CC0076166C /* VoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DD17B2CD806CC0076166C /* VoteService.swift */; };
+		AA812A962CFE5C58006BB013 /* MoyaProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA812A952CFE5C58006BB013 /* MoyaProvider+Async.swift */; };
+		AA812A982CFE625D006BB013 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA812A972CFE625D006BB013 /* AppState.swift */; };
+		AAA32A272D0895EA004E16F1 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA32A262D0895EA004E16F1 /* NetworkClient.swift */; };
+		AAF80C5E2D05E71E005DDE4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF80C5D2D05E71E005DDE4D /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA2AC6C42CF6303E00FE0144 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		AA2AC6C52CF6303E00FE0144 /* EBGaramond-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EBGaramond-Italic.ttf"; sourceTree = "<group>"; };
+		AA2AC6C62CF6303E00FE0144 /* EBGaramond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EBGaramond.ttf; sourceTree = "<group>"; };
+		AA2AC6C72CF6303E00FE0144 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		AA2AC6C82CF6303F00FE0144 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		AA2AC6C92CF6303F00FE0144 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
+		AA2AC6CA2CF6303F00FE0144 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		AA2AC6CB2CF6303F00FE0144 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		AA2AC6CC2CF6303F00FE0144 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		AA2AC6CD2CF6303F00FE0144 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		AA2AC6CE2CF6303F00FE0144 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		AA2AC6CF2CF6303F00FE0144 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		AA74C62B2CF5EA8000CE4396 /* VoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteAPI.swift; sourceTree = "<group>"; };
+		AA74C62D2CF5EAE800CE4396 /* PostAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAPI.swift; sourceTree = "<group>"; };
+		AA74C6302CF5EBCE00CE4396 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		AA74C6322CF5EBF800CE4396 /* DiscussionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionAPI.swift; sourceTree = "<group>"; };
+		AA74C63E2CF5F92600CE4396 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		AA74C6412CF5F9CE00CE4396 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
+		AA74C6432CF5FAB600CE4396 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		AA74C6452CF5FC2D00CE4396 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		AA74C6482CF5FC8F00CE4396 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		AA74C64B2CF5FCD200CE4396 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AA7544922CCD4439001C77C8 /* Nightwind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nightwind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA7544952CCD4439001C77C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA7544972CCD4439001C77C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AA7544992CCD4439001C77C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AA7544992CCD4439001C77C8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		AA75449C2CCD4439001C77C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AA75449E2CCD443A001C77C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA7544A12CCD443A001C77C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +92,10 @@
 		AA7DA60C2CCD4DA60003CB53 /* Discussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discussion.swift; sourceTree = "<group>"; };
 		AA7DD1792CD8069D0076166C /* Vote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		AA7DD17B2CD806CC0076166C /* VoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteService.swift; sourceTree = "<group>"; };
+		AA812A952CFE5C58006BB013 /* MoyaProvider+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Async.swift"; sourceTree = "<group>"; };
+		AA812A972CFE625D006BB013 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		AAA32A262D0895EA004E16F1 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		AAF80C5D2D05E71E005DDE4D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,15 +103,73 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA74C6382CF5ED3E00CE4396 /* Moya in Frameworks */,
+				AA74C6362CF5ED3E00CE4396 /* CombineMoya in Frameworks */,
+				AA74C63C2CF5ED3E00CE4396 /* RxMoya in Frameworks */,
+				AA74C63A2CF5ED3E00CE4396 /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA2AC6C32CF6302F00FE0144 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				AA2AC6CF2CF6303F00FE0144 /* Lato-Black.ttf */,
+				AA2AC6C82CF6303F00FE0144 /* Lato-BlackItalic.ttf */,
+				AA2AC6CA2CF6303F00FE0144 /* Lato-Bold.ttf */,
+				AA2AC6CC2CF6303F00FE0144 /* Lato-BoldItalic.ttf */,
+				AA2AC6CD2CF6303F00FE0144 /* Lato-Italic.ttf */,
+				AA2AC6C72CF6303E00FE0144 /* Lato-Light.ttf */,
+				AA2AC6CE2CF6303F00FE0144 /* Lato-LightItalic.ttf */,
+				AA2AC6CB2CF6303F00FE0144 /* Lato-Regular.ttf */,
+				AA2AC6C42CF6303E00FE0144 /* Lato-Thin.ttf */,
+				AA2AC6C92CF6303F00FE0144 /* Lato-ThinItalic.ttf */,
+				AA2AC6C52CF6303E00FE0144 /* EBGaramond-Italic.ttf */,
+				AA2AC6C62CF6303E00FE0144 /* EBGaramond.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		AA74C63D2CF5F91200CE4396 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				AA74C63E2CF5F92600CE4396 /* Styles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		AA74C6402CF5F9BB00CE4396 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				AA74C6412CF5F9CE00CE4396 /* InputField.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		AA74C6472CF5FC6800CE4396 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				AA74C6432CF5FAB600CE4396 /* AuthView.swift */,
+				AA74C6482CF5FC8F00CE4396 /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		AA74C64A2CF5FCBB00CE4396 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				AA74C6452CF5FC2D00CE4396 /* RegisterView.swift */,
+				AA74C64B2CF5FCD200CE4396 /* RegisterViewModel.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		AA7544892CCD4439001C77C8 = {
 			isa = PBXGroup;
 			children = (
+				AA2AC6C32CF6302F00FE0144 /* fonts */,
 				AA7544942CCD4439001C77C8 /* ios */,
 				AA7544932CCD4439001C77C8 /* Products */,
 			);
@@ -72,14 +186,31 @@
 		AA7544942CCD4439001C77C8 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				AA812A942CFE5C3B006BB013 /* Extensions */,
+				AA76F3492CFCC0BB00C3470A /* APIs */,
+				AA74C6402CF5F9BB00CE4396 /* Components */,
+				AA74C63D2CF5F91200CE4396 /* Styles */,
 				AA7DA60F2CCD51090003CB53 /* Views */,
 				AA7DA6072CCD4D700003CB53 /* Models */,
 				AA7DA6002CCD4D060003CB53 /* Services */,
 				AA7544952CCD4439001C77C8 /* AppDelegate.swift */,
 				AA7544972CCD4439001C77C8 /* SceneDelegate.swift */,
 				AA7544A32CCD443A001C77C8 /* Info.plist */,
+				AA812A972CFE625D006BB013 /* AppState.swift */,
 			);
 			path = ios;
+			sourceTree = "<group>";
+		};
+		AA76F3492CFCC0BB00C3470A /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				AA74C62B2CF5EA8000CE4396 /* VoteAPI.swift */,
+				AA74C62D2CF5EAE800CE4396 /* PostAPI.swift */,
+				AA74C6302CF5EBCE00CE4396 /* UserAPI.swift */,
+				AA74C6322CF5EBF800CE4396 /* DiscussionAPI.swift */,
+				AAA32A262D0895EA004E16F1 /* NetworkClient.swift */,
+			);
+			path = APIs;
 			sourceTree = "<group>";
 		};
 		AA7DA6002CCD4D060003CB53 /* Services */ = {
@@ -107,12 +238,31 @@
 		AA7DA60F2CCD51090003CB53 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AA75449B2CCD4439001C77C8 /* Main.storyboard */,
+				AA812A9D2CFE7A56006BB013 /* Main */,
+				AA74C64A2CF5FCBB00CE4396 /* Register */,
+				AA74C6472CF5FC6800CE4396 /* Auth */,
 				AA75449E2CCD443A001C77C8 /* Assets.xcassets */,
 				AA7544A02CCD443A001C77C8 /* LaunchScreen.storyboard */,
-				AA7544992CCD4439001C77C8 /* ViewController.swift */,
+				AAF80C5D2D05E71E005DDE4D /* ViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AA812A942CFE5C3B006BB013 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA812A952CFE5C58006BB013 /* MoyaProvider+Async.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AA812A9D2CFE7A56006BB013 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				AA75449B2CCD4439001C77C8 /* Main.storyboard */,
+				AA7544992CCD4439001C77C8 /* MainViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +281,12 @@
 			dependencies = (
 			);
 			name = Nightwind;
+			packageProductDependencies = (
+				AA74C6352CF5ED3E00CE4396 /* CombineMoya */,
+				AA74C6372CF5ED3E00CE4396 /* Moya */,
+				AA74C6392CF5ED3E00CE4396 /* ReactiveMoya */,
+				AA74C63B2CF5ED3E00CE4396 /* RxMoya */,
+			);
 			productName = ios;
 			productReference = AA7544922CCD4439001C77C8 /* Nightwind.app */;
 			productType = "com.apple.product-type.application";
@@ -160,6 +316,9 @@
 				Base,
 			);
 			mainGroup = AA7544892CCD4439001C77C8;
+			packageReferences = (
+				AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = AA7544932CCD4439001C77C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -174,9 +333,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA2AC6D02CF6305900FE0144 /* Lato-Black.ttf in Resources */,
+				AA2AC6D82CF6307600FE0144 /* Lato-Thin.ttf in Resources */,
+				AA2AC6D62CF6307000FE0144 /* Lato-LightItalic.ttf in Resources */,
+				AA2AC6D22CF6306000FE0144 /* Lato-Bold.ttf in Resources */,
 				AA7544A22CCD443A001C77C8 /* LaunchScreen.storyboard in Resources */,
+				AA2AC6D52CF6306B00FE0144 /* Lato-Light.ttf in Resources */,
+				AA2AC6D12CF6305C00FE0144 /* Lato-BlackItalic.ttf in Resources */,
+				AA2AC6DA2CF6307D00FE0144 /* EBGaramond-Italic.ttf in Resources */,
+				AA2AC6DB2CF6308200FE0144 /* EBGaramond.ttf in Resources */,
 				AA75449F2CCD443A001C77C8 /* Assets.xcassets in Resources */,
+				AA2AC6D32CF6306500FE0144 /* Lato-BoldItalic.ttf in Resources */,
+				AA2AC6D42CF6306800FE0144 /* Lato-Italic.ttf in Resources */,
 				AA75449D2CCD4439001C77C8 /* Main.storyboard in Resources */,
+				AA2AC6D92CF6307900FE0144 /* Lato-ThinItalic.ttf in Resources */,
+				AA2AC6D72CF6307300FE0144 /* Lato-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,15 +358,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA74C6492CF5FC8F00CE4396 /* AuthViewModel.swift in Sources */,
+				AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */,
 				AA7DA6042CCD4D470003CB53 /* PostService.swift in Sources */,
 				AA7DA6062CCD4D580003CB53 /* DiscussionService.swift in Sources */,
 				AA7DA6022CCD4D2E0003CB53 /* UserService.swift in Sources */,
 				AA7DA60B2CCD4D9A0003CB53 /* Post.swift in Sources */,
-				AA75449A2CCD4439001C77C8 /* ViewController.swift in Sources */,
+				AA74C62E2CF5EAE800CE4396 /* PostAPI.swift in Sources */,
+				AA75449A2CCD4439001C77C8 /* MainViewController.swift in Sources */,
+				AA74C62C2CF5EA8000CE4396 /* VoteAPI.swift in Sources */,
+				AA74C6462CF5FC2D00CE4396 /* RegisterView.swift in Sources */,
+				AA74C6442CF5FAB600CE4396 /* AuthView.swift in Sources */,
 				AA7544962CCD4439001C77C8 /* AppDelegate.swift in Sources */,
+				AAA32A272D0895EA004E16F1 /* NetworkClient.swift in Sources */,
+				AA74C63F2CF5F92600CE4396 /* Styles.swift in Sources */,
 				AA7DA60D2CCD4DA60003CB53 /* Discussion.swift in Sources */,
+				AA812A982CFE625D006BB013 /* AppState.swift in Sources */,
+				AA74C6422CF5F9CE00CE4396 /* InputField.swift in Sources */,
 				AA7DD17A2CD8069D0076166C /* Vote.swift in Sources */,
+				AA74C64C2CF5FCD200CE4396 /* RegisterViewModel.swift in Sources */,
+				AAF80C5E2D05E71E005DDE4D /* ViewController.swift in Sources */,
+				AA74C6312CF5EBCE00CE4396 /* UserAPI.swift in Sources */,
 				AA7544982CCD4439001C77C8 /* SceneDelegate.swift in Sources */,
+				AA812A962CFE5C58006BB013 /* MoyaProvider+Async.swift in Sources */,
 				AA7DD17C2CD806CC0076166C /* VoteService.swift in Sources */,
 				AA7DA6092CCD4D880003CB53 /* User.swift in Sources */,
 			);
@@ -418,6 +603,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA74C6352CF5ED3E00CE4396 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		AA74C6372CF5ED3E00CE4396 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		AA74C6392CF5ED3E00CE4396 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		AA74C63B2CF5ED3E00CE4396 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA75448A2CCD4439001C77C8 /* Project object */;
 }
