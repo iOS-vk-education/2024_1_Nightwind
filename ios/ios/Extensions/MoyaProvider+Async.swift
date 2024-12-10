@@ -9,6 +9,16 @@
 import Foundation
 import Moya
 
+enum APIError: Error {
+    case networkError(Error)
+    case serverError(Int, [String: String])
+    case unknownError
+
+    init(statusCode: Int, validationErrors: [String: String]) {
+        self = .serverError(statusCode, [:])
+    }
+}
+
 extension MoyaProvider {
     func request(_ target: Target) async throws -> Response {
         try await withCheckedThrowingContinuation { continuation in
@@ -16,21 +26,17 @@ extension MoyaProvider {
                 switch result {
                 case .success(let response):
                     do {
-                        let response = try response.filterSuccessfulStatusCodes()
-                        continuation.resume(returning: response)
-                    }
-                    catch {
-                        do {
-                            let errorResponse = try response.map(ErrorResponse.self)
-                            let apiError = APIError(statusCode: response.statusCode, validationErrors: errorResponse.validationErrors)
-                            continuation.resume(throwing: apiError)
-                        }
-                        catch(let error) {
-                            continuation.resume(throwing: error)
+                        let filteredResponse = try response.filterSuccessfulStatusCodes()
+                        continuation.resume(returning: filteredResponse)
+                    } catch {
+                        if let apiError = try? response.map(ErrorResponse.self) {
+                            continuation.resume(throwing: APIError(statusCode: response.statusCode, validationErrors: apiError.validationErrors))
+                        } else {
+                            continuation.resume(throwing: APIError(statusCode: response.statusCode, validationErrors: [:]))
                         }
                     }
                 case .failure(let error):
-                    continuation.resume(throwing: error)
+                    continuation.resume(throwing: APIError.networkError(error))
                 }
             }
         }
@@ -38,10 +44,5 @@ extension MoyaProvider {
 }
 
 struct ErrorResponse: Decodable {
-    let validationErrors: [String: String]
-}
-
-struct APIError: Error {
-    let statusCode: Int
     let validationErrors: [String: String]
 }

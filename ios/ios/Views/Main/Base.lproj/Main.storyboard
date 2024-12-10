@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main View Model-->
+        <!--Main View Controller-->
         <scene sceneID="DuZ-l8-HI7">
             <objects>
-                <viewController storyboardIdentifier="MainViewModel" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cac-TT-a23" customClass="MainViewModel" customModule="Nightwind" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cac-TT-a23" customClass="MainViewController" customModule="Nightwind" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S8C-g7-8nO">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

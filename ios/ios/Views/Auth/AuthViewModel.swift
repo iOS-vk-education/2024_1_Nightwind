@@ -8,27 +8,43 @@
 
 import Foundation
 
+@MainActor
 final class AuthViewModel: ObservableObject {
-    private let userService = UserService()
+    private let userService = AppState.userService
     
     @Published var login = ""
     @Published var password = ""
     @Published var error: String?
     @Published var validationErrors: [String: String] = [:]
     
-    func signIn() async {
+    func signIn() async -> Bool {
         do {
             let _ = try await userService.auth(login: login, password: password)
-            self.validationErrors = [:]
-        } catch let e as APIError {
-            if !e.validationErrors.isEmpty {
-                self.validationErrors = e.validationErrors
+            validationErrors = [:]
+            return true
+        } catch let apiError as APIError {
+            handleAPIError(apiError)
+        } catch {
+            self.error = "An unexpected error occurred."
+        }
+        
+        return false
+    }
+
+    private func handleAPIError(_ error: APIError) {
+        switch error {
+        case .networkError(let networkError):
+            self.error = "Network error: \(networkError.localizedDescription)"
+        case .serverError(let statusCode, let validationErrors):
+            if !validationErrors.isEmpty {
+                self.validationErrors = validationErrors
                 self.error = nil
-            }
-            if e.statusCode == 401 || e.statusCode == 400 {
+            } else if statusCode == 401 || statusCode == 400 {
                 self.validationErrors = [:]
                 self.error = "Wrong login or password"
             }
-        } catch {}
+        case .unknownError:
+            self.error = "An unexpected error occurred."
+        }
     }
 }

@@ -8,10 +8,16 @@
 import Foundation
 
 final class PostService {
-    private let postRepository = PostRepository()
+    private let networkClient: NetworkClient
+    
+    init(networkClient: NetworkClient) {
+        self.networkClient = networkClient
+    }
 
     func getPosts() async throws -> [Post] {
-        return try await postRepository.get()
+        return try await networkClient.request(
+            PostAPI.getPosts,
+            responseType: [Post].self)
     }
 }
 

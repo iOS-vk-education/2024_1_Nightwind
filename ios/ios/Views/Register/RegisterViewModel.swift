@@ -8,16 +8,16 @@
 
 import Foundation
 
-import Foundation
-
+@MainActor
 final class RegisterViewModel: ObservableObject {
-    private let userService = UserService()
+    private let userService = AppState.userService
     
     @Published var name = ""
     @Published var login = ""
     @Published var password = ""
     @Published var confirmPassword = ""
     @Published var error: String? = nil
+    @Published var validationErrors: [String: String] = [:]
     var onSuccess: (() -> Void)?
 
     func signUp() async {
@@ -26,15 +26,37 @@ final class RegisterViewModel: ObservableObject {
             return
         }
         
+        guard password == confirmPassword else {
+            validationErrors["confirmPassword"] = "Passwords do not match"
+            return
+        }
+        
         do {
-            _ = try await userService.register(name: name, login: login, password: password)
-            DispatchQueue.main.async {
-                self.onSuccess?()
-            }
+            let _ = try await userService.register(name: name, login: login, password: password)
+            validationErrors = [:]
+            onSuccess?()
+        } catch let apiError as APIError {
+            handleAPIError(apiError)
         } catch {
-            DispatchQueue.main.async {
-                self.error = "Registration failed: \(error.localizedDescription)"
+            self.error = "An unexpected error occurred."
+        }
+    }
+
+    private func handleAPIError(_ error: APIError) {
+        switch error {
+        case .networkError(let networkError):
+            self.error = "Network error: \(networkError.localizedDescription)"
+        case .serverError(let statusCode, let validationErrors):
+            if !validationErrors.isEmpty {
+                self.validationErrors = validationErrors
+                self.error = nil
+            } else if statusCode == 401 || statusCode == 400 {
+                self.validationErrors = [:]
+                self.error = "Error on input"
             }
+        case .unknownError:
+            self.error = "An unexpected error occurred."
         }
     }
 }
+

@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 struct AuthView: View {
+    @EnvironmentObject var root: ViewController
+    
     @StateObject private var viewModel = AuthViewModel()
     @State private var showRegister = false
         
@@ -38,7 +40,9 @@ struct AuthView: View {
                 HStack {
                     Button(action: {
                         Task {
-                            await viewModel.signIn()
+                            if await viewModel.signIn() {
+                                root.pushMainView()
+                            }
                         }
                     }) {
                         Text("Sign in")
