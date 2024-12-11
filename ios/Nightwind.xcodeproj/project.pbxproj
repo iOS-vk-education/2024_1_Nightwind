@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94B150502D092ABF007B0256 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */; };
+		94B150512D092ABF007B0256 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504D2D092ABF007B0256 /* PostView.swift */; };
+		94B150522D092ABF007B0256 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504E2D092ABF007B0256 /* PostViewController.swift */; };
+		94B150532D092ABF007B0256 /* DiscussionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */; };
 		AA2AC6D02CF6305900FE0144 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CF2CF6303F00FE0144 /* Lato-Black.ttf */; };
 		AA2AC6D12CF6305C00FE0144 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6C82CF6303F00FE0144 /* Lato-BlackItalic.ttf */; };
 		AA2AC6D22CF6306000FE0144 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA2AC6CA2CF6303F00FE0144 /* Lato-Bold.ttf */; };
@@ -54,6 +58,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionTableViewCell.swift; sourceTree = "<group>"; };
+		94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		94B1504D2D092ABF007B0256 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		94B1504E2D092ABF007B0256 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		AA2AC6C42CF6303E00FE0144 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
 		AA2AC6C52CF6303E00FE0144 /* EBGaramond-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EBGaramond-Italic.ttf"; sourceTree = "<group>"; };
 		AA2AC6C62CF6303E00FE0144 /* EBGaramond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EBGaramond.ttf; sourceTree = "<group>"; };
@@ -113,6 +121,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94B1504F2D092ABF007B0256 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */,
+				94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */,
+				94B1504D2D092ABF007B0256 /* PostView.swift */,
+				94B1504E2D092ABF007B0256 /* PostViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		AA2AC6C32CF6302F00FE0144 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +263,7 @@
 				AA75449E2CCD443A001C77C8 /* Assets.xcassets */,
 				AA7544A02CCD443A001C77C8 /* LaunchScreen.storyboard */,
 				AAF80C5D2D05E71E005DDE4D /* ViewController.swift */,
+				94B1504F2D092ABF007B0256 /* Post */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -362,6 +382,10 @@
 				AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */,
 				AA7DA6042CCD4D470003CB53 /* PostService.swift in Sources */,
 				AA7DA6062CCD4D580003CB53 /* DiscussionService.swift in Sources */,
+				94B150502D092ABF007B0256 /* PostTableViewCell.swift in Sources */,
+				94B150512D092ABF007B0256 /* PostView.swift in Sources */,
+				94B150522D092ABF007B0256 /* PostViewController.swift in Sources */,
+				94B150532D092ABF007B0256 /* DiscussionTableViewCell.swift in Sources */,
 				AA7DA6022CCD4D2E0003CB53 /* UserService.swift in Sources */,
 				AA7DA60B2CCD4D9A0003CB53 /* Post.swift in Sources */,
 				AA74C62E2CF5EAE800CE4396 /* PostAPI.swift in Sources */,
