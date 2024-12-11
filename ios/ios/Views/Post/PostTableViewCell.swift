@@ -17,7 +17,7 @@ class PostTableViewCell: UITableViewCell {
         setupCell()
         separatorInset = .zero
         layoutMargins = .zero
-        selectionStyle = .none // Отключаем выделение ячейки
+        selectionStyle = .none
     }
 
     required init?(coder: NSCoder) {
@@ -39,7 +39,7 @@ class PostTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = bounds // Убираем отступы contentView
+        contentView.frame = bounds
     }
 
     func configure(with post: Post) {

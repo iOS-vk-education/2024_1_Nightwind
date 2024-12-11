@@ -57,8 +57,8 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
         
         view.backgroundColor = .black
         
-        setupInputField() // Сначала настраиваем inputField
-        setupTableView()  // Затем настраиваем tableView
+        setupInputField()
+        setupTableView()
         setupScrollToTopButton()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -67,7 +67,7 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
 
     
     private func setupTableView() {
-        view.addSubview(tableView) // Добавляем в то же супервью
+        view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         tableView.delegate = self
@@ -80,10 +80,10 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
         tableView.estimatedRowHeight = 200
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor), // Привязываем к верхней границе супервью
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: inputTextField.topAnchor) // Привязываем к текстовому полю
+            tableView.bottomAnchor.constraint(equalTo: inputTextField.topAnchor)
         ])
     }
 
@@ -125,8 +125,6 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             return false
         }
         
-        
-        // Создаем новый комментарий
         let newComment = Discussion(
             id: post.disscussion.count + 1,
             text: text,
@@ -136,7 +134,6 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             voteCount: 0
         )
         
-        // Создаем новый пост с добавленным комментарием
         let updatedDiscussions = post.disscussion + [newComment]
         post = Post(
             id: post.id,
@@ -149,14 +146,11 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             disscussion: updatedDiscussions
         )
         
-        // Очищаем текстовое поле и скрываем клавиатуру
         textField.text = ""
-        textField.resignFirstResponder() // Скрытие клавиатуры
+        textField.resignFirstResponder()
         
-        // Обновляем таблицу
         tableView.reloadData()
         
-        // Скроллим к последнему комментарию
         let indexPath = IndexPath(row: post.disscussion.count, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         

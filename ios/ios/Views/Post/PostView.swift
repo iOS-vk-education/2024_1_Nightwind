@@ -11,7 +11,6 @@ import UIKit
 
 class PostView: UIView {
     
-    // UI элементы
     private let displayNameLabel = UILabel()
     private let usernameLabel = UILabel()
     private let creationTimeLabel = UILabel()
@@ -65,13 +64,11 @@ class PostView: UIView {
     }
     
     private func setupLayout() {
-        // Контейнер для ника и даты
         let usernameAndDateStack = UIStackView(arrangedSubviews: [usernameLabel, creationTimeLabel])
         usernameAndDateStack.axis = .horizontal
         usernameAndDateStack.distribution = .equalSpacing
         usernameAndDateStack.translatesAutoresizingMaskIntoConstraints = false
         
-        // Добавление всех элементов
         addSubviews(displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteCountLabel, viewCountLabel, commentCountLabel)
         
         NSLayoutConstraint.activate([
