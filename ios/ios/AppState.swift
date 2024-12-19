@@ -13,4 +13,6 @@ class AppState: ObservableObject {
     private static let networkClient = NetworkClientImpl()
     
     public static let userService = UserService(networkClient: AppState.networkClient)
+    
+    public static let postService = PostService(networkClient: AppState.networkClient)
 }

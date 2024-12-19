@@ -15,7 +15,7 @@ class ViewController: UIViewController, ObservableObject {
         super.viewDidLoad()
         self.addView()
         if AppState.userService.getJwt() != nil {
-           pushMainView()
+            pushTabBarView()
         }
     }
     
@@ -35,19 +35,14 @@ class ViewController: UIViewController, ObservableObject {
         ])
     }
     
-    func pushMainView() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController else {
-            fatalError("MainViewController not found in Main storyboard.")
-        }
-
+    func pushTabBarView() {
+        let controller = TabBarViewController()
         controller.root = self
-        self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    func popMainView() {
-        self.navigationController?.popToRootViewController(animated: false)
+        
+    func popTabBarView() {
+            self.navigationController?.popToRootViewController(animated: false)
     }
 }
 
