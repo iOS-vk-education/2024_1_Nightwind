@@ -51,6 +51,10 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             )
         ]
     )
+    
+    func updatePost(newPost: Post) {
+        post = newPost;
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

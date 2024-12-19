@@ -41,7 +41,7 @@ struct AuthView: View {
                     Button(action: {
                         Task {
                             if await viewModel.signIn() {
-                                root.pushMainView()
+                                root.pushTabBarView()
                             }
                         }
                     }) {
