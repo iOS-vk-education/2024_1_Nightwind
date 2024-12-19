@@ -12,7 +12,7 @@ import Moya
 
 enum DiscussionAPI {
     case getDiscussionsForPost(postId: Int)
-    case createDiscussion(postId: Int, jwt: String, text: String, parentDiscussionId: Int?)
+    case createDiscussion(postId: Int, jwt: String, discussion: DiscussionForm, parentDiscussionId: Int?)
 }
 
 extension DiscussionAPI: TargetType {
@@ -42,12 +42,17 @@ extension DiscussionAPI: TargetType {
         switch self {
         case .getDiscussionsForPost:
             return .requestPlain
-        case .createDiscussion(_, let jwt, let text, let parentDiscussionId):
-            var params: [String: Any] = ["text": text, "jwt": jwt]
+        case .createDiscussion(_, let jwt, let discussion, let parentDiscussionId):
+            var urlParams: [String: Any] = ["jwt": jwt]
             if let parentId = parentDiscussionId {
-                params["parentDiscussionId"] = parentId
+                urlParams["parentDiscussionId"] = parentId
             }
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            
+            let bodyParams: [String: Any] = [
+                "text": discussion.text
+            ]
+            
+            return .requestCompositeParameters(bodyParameters: bodyParams, bodyEncoding: JSONEncoding.default, urlParameters: urlParams)
         }
     }
     

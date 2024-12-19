@@ -12,9 +12,13 @@ import SwiftUI
 struct AuthView: View {
     @EnvironmentObject var root: ViewController
     
-    @StateObject private var viewModel = AuthViewModel()
+    @StateObject private var viewModel: AuthViewModel
     @State private var showRegister = false
         
+    init(userService: UserService) {
+        _viewModel = StateObject(wrappedValue: AuthViewModel(userService: userService))
+    }
+    
     var body: some View {
         ZStack {
             Styles.Light.base.edgesIgnoringSafeArea(.all)
@@ -58,7 +62,7 @@ struct AuthView: View {
                         showRegister = true
                     }
                     .sheet(isPresented: $showRegister) {
-                        RegisterView(onSuccess: { showRegister = false })
+                        viewModel.registerVIew(showRegister: $showRegister)
                     }
                 }
             }

@@ -11,8 +11,13 @@ import Foundation
 import SwiftUI
 
 struct RegisterView: View {
-    @StateObject private var viewModel = RegisterViewModel()
+    @StateObject private var viewModel: RegisterViewModel
     var onSuccess: () -> Void
+    
+    init(userService: UserService, onSuccess: @escaping () -> Void) {
+        _viewModel = StateObject(wrappedValue: RegisterViewModel(userService: userService))
+        self.onSuccess = onSuccess
+    }
     
     var body: some View {
         VStack(spacing: 20) {

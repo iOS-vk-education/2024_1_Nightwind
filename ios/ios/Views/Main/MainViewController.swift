@@ -14,32 +14,43 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var jwtLabel: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
     
-    private let userService = AppState.userService
-    private let postService = AppState.postService
-    private var posts: [Post] = []
+    private let userService: UserService
+    private let postService: PostService
+    private let discussionService: DiscussionService
+    private let voteService: VoteService
     
+    private var posts: [Post] = []
     
     private var tableView = UITableView()
     
+    init(userService: UserService, postService: PostService, discussionService: DiscussionService, voteService: VoteService) {
+        self.userService = userService
+        self.postService = postService
+        self.discussionService = discussionService
+        self.voteService = voteService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        navigationItem.hidesBackButton = true
-        
-        if let navigationController = navigationController {
-            navigationController.interactivePopGestureRecognizer?.isEnabled = false
-        }
     
-        
 //        jwtLabel.isUserInteractionEnabled = false
 //        jwtLabel.text = userService.getJwt()
         
         
         setupTableView()
         loadPosts()
+        
+        self.navigationItem.hidesBackButton = true
+        if let navigationController = navigationController {
+            navigationController.interactivePopGestureRecognizer?.isEnabled = false
+        }
     }
         
     private func setupTableView() {
@@ -65,8 +76,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     private func loadPosts() {
-        posts = postService.getPosts()
-        tableView.reloadData()
+        Task {
+            do {
+                posts = try await postService.getPosts()
+            } catch {}
+            tableView.reloadData()
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,8 +139,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
         
-        let controller = PostViewController()
-        controller.updatePost(newPost: post)
+        let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
         self.navigationController?.pushViewController(controller, animated: false)
     }
 

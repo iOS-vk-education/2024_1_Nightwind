@@ -15,5 +15,10 @@ struct Post: Codable {
     let viewCount: Int
     let creationTime: String
     let voteCount: Int
-    let disscussion: [Discussion]
+    let discussionCount: Int
+}
+
+struct PostForm: Codable {
+    let title: String
+    let text: String
 }

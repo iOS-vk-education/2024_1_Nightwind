@@ -7,10 +7,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor
 final class AuthViewModel: ObservableObject {
-    private let userService = AppState.userService
+    private let userService: UserService
+    
+    init(userService: UserService) {
+        self.userService = userService
+    }
     
     @Published var login = ""
     @Published var password = ""
@@ -29,6 +34,10 @@ final class AuthViewModel: ObservableObject {
         }
         
         return false
+    }
+    
+    func registerVIew(showRegister: Binding<Bool>) -> RegisterView {
+        return RegisterView(userService: self.userService, onSuccess: { showRegister.wrappedValue = false })
     }
 
     private func handleAPIError(_ error: APIError) {

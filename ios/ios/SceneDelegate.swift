@@ -11,10 +11,17 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        let networkClient = NetworkClientImpl()
+        let userService = UserService(networkClient: networkClient)
+        let postService = PostService(networkClient: networkClient)
+        let discussionService = DiscussionService(networkClient: networkClient)
+        let voteService = VoteService(networkClient: networkClient)
+        
+        let navigationController = UINavigationController(rootViewController: ViewController(userService: userService, postService: postService, discussionService: discussionService, voteService: voteService))
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationController

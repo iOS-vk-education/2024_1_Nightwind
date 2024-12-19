@@ -122,7 +122,7 @@ class PostView: UIView {
         textLabel.text = post.text
         voteCountLabel.text = "↑ \(post.voteCount)"
         viewCountLabel.text = "\(post.viewCount) views"
-        commentCountLabel.text = "💬 \(post.disscussion.count)"
+        commentCountLabel.text = "💬 \(post.discussionCount)"
     }
 }
 

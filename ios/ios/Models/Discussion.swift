@@ -11,7 +11,11 @@ struct Discussion: Codable {
     let id: Int
     let text: String
     let user: User
-    let parentDiscussionId: Int
+    let parentDiscussionId: Int?
     let creationTime: String
     let voteCount: Int
+}
+
+struct DiscussionForm: Codable {
+    let text: String
 }

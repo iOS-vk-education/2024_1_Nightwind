@@ -9,21 +9,41 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
-    
+    private let userService: UserService
+    private let postService: PostService
+    private let discussionService: DiscussionService
+    private let voteService: VoteService
+
     weak var root: ViewController?
+    
+    init(userService: UserService, postService: PostService, discussionService: DiscussionService, voteService: VoteService) {
+        self.userService = userService
+        self.postService = postService
+        self.discussionService = discussionService
+        self.voteService = voteService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setAppereance()
         generateTabBar()
+        
+        self.navigationItem.hidesBackButton = true
+        if let navigationController = navigationController {
+            navigationController.interactivePopGestureRecognizer?.isEnabled = false
+        }
     }
     
     
     private func generateTabBar() {
-        
         viewControllers = [
             generateViewController(
-                viewController: MainViewController(),
+                viewController: MainViewController(userService: userService, postService: postService, discussionService: discussionService, voteService: voteService),
                 title: "Posts",
                 image: UIImage(systemName: "list.bullet.clipboard")),
             generateViewController(

@@ -10,7 +10,7 @@ import Foundation
 
 @MainActor
 final class RegisterViewModel: ObservableObject {
-    private let userService = AppState.userService
+    private let userService: UserService
     
     @Published var name = ""
     @Published var login = ""
@@ -19,6 +19,10 @@ final class RegisterViewModel: ObservableObject {
     @Published var error: String? = nil
     @Published var validationErrors: [String: String] = [:]
     var onSuccess: (() -> Void)?
+    
+    init(userService: UserService) {
+        self.userService = userService
+    }
 
     func signUp() async {
         guard login.count <= 30 else {

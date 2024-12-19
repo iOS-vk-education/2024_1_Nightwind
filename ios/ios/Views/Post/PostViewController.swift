@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 class PostViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+    private let discussionService: DiscussionService
+    private let voteService: VoteService
+    private let userService: UserService
     
     private let tableView = UITableView()
     private let inputTextField: UITextField = {
@@ -30,32 +33,32 @@ class PostViewController: UIViewController, UITableViewDelegate, UITableViewData
         return button
     }()
     
-    private var post: Post = Post(
-        id: 1,
-        title: "New Episode!",
-        text: """
-Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to life from the storyboards to the final scenes has been such a rewarding experience.
-""",
-        user: User(id: 1, name: "Ema Yasuhara", login: "emmya", admin: nil, creationTime: "2024-10-07"),
-        viewCount: 6941,
-        creationTime: "2:24 07 Oct 24",
-        voteCount: 1336,
-        disscussion: [
-            Discussion(
-                id: 1,
-                text: "This episode was amazing!",
-                user: User(id: 2, name: "John Doe", login: "johndoe", admin: nil, creationTime: "2024-10-07"),
-                parentDiscussionId: 0,
-                creationTime: "2:30 07 Oct 24",
-                voteCount: 45
-            )
-        ]
-    )
+    private var post: Post
+    private var discussions: [Discussion] = []
     
-    func updatePost(newPost: Post) {
-        post = newPost;
+    init(post: Post, discussionService: DiscussionService, voteService: VoteService, userService: UserService) {
+        self.post = post
+        self.discussionService = discussionService
+        self.voteService = voteService
+        self.userService = userService
+        super.init(nibName: nil, bundle: nil)
+        
+        update()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func update() {
+        Task {
+            do {
+                discussions = try await discussionService.getDiscussionsForPost(postId: post.id)
+                tableView.reloadData()
+            } catch {}
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,34 +132,23 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             return false
         }
         
-        let newComment = Discussion(
-            id: post.disscussion.count + 1,
-            text: text,
-            user: User(id: 4, name: "Current User", login: "currentuser", admin: nil, creationTime: "2024-10-08"),
-            parentDiscussionId: 0,
-            creationTime: "Now",
-            voteCount: 0
+        let newDiscussion = DiscussionForm(
+            text: text
         )
-        
-        let updatedDiscussions = post.disscussion + [newComment]
-        post = Post(
-            id: post.id,
-            title: post.title,
-            text: post.text,
-            user: post.user,
-            viewCount: post.viewCount,
-            creationTime: post.creationTime,
-            voteCount: post.voteCount,
-            disscussion: updatedDiscussions
-        )
-        
+
         textField.text = ""
         textField.resignFirstResponder()
         
-        tableView.reloadData()
-        
-        let indexPath = IndexPath(row: post.disscussion.count, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        Task {
+            do {
+                try await discussionService.postDiscussion(postId: post.id, jwt: userService.getJwt()!, discussion: newDiscussion, parentDiscussionId: nil)
+            
+                update()
+                
+                let indexPath = IndexPath(row: discussions.count, section: 0)
+                tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            } catch {}
+        }
         
         return true
     }
@@ -166,7 +158,7 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
     // MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + post.disscussion.count
+        return 1 + discussions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -180,7 +172,7 @@ Just wrapped up the latest episode of Aerial Girl Squad! Watching it come to lif
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "DiscussionCell", for: indexPath) as? DiscussionTableViewCell else {
                 return UITableViewCell()
             }
-            let discussion = post.disscussion[indexPath.row - 1]
+            let discussion = discussions[indexPath.row - 1]
             cell.configure(with: discussion)
             return cell
         }
