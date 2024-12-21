@@ -47,7 +47,7 @@ class TabBarViewController: UITabBarController {
                 title: "Posts",
                 image: UIImage(systemName: "list.bullet.clipboard")),
             generateViewController(
-                viewController: WritePostViewController(),
+                viewController: WritePostViewController(userService: userService, postService: postService),
                 title: "Write Post",
                 image: UIImage(systemName: "square.and.pencil"))
         ]

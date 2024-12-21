@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		794DCE152D1725F8007E216E /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DCE142D1725F8007E216E /* WritePostView.swift */; };
 		94B150502D092ABF007B0256 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */; };
 		94B150512D092ABF007B0256 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504D2D092ABF007B0256 /* PostView.swift */; };
 		94B150522D092ABF007B0256 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504E2D092ABF007B0256 /* PostViewController.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		794DCE142D1725F8007E216E /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
 		94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionTableViewCell.swift; sourceTree = "<group>"; };
 		94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		94B1504D2D092ABF007B0256 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */,
 				94B1504D2D092ABF007B0256 /* PostView.swift */,
 				94B1504E2D092ABF007B0256 /* PostViewController.swift */,
+				794DCE142D1725F8007E216E /* WritePostView.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794DCE152D1725F8007E216E /* WritePostView.swift in Sources */,
 				AA74C6492CF5FC8F00CE4396 /* AuthViewModel.swift in Sources */,
 				AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */,
 				AA7DA6042CCD4D470003CB53 /* PostService.swift in Sources */,
