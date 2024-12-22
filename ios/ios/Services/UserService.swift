@@ -18,7 +18,7 @@ final class UserService {
     }
     
     func auth(login: String, password: String) async throws -> String {
-        let jwt = try await networkClient.requestRaw(
+        let jwt = try await networkClient.requestString(
             UserAPI.authenticateUser(login: login, password: password))
         guard setJwt(jwt) else {
             throw NSError(domain: "UserService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to store JWT"])

@@ -9,8 +9,9 @@ import Foundation
 
 struct Vote: Codable {
     let id: Int
-    let userId: Int
-    let postId: Int?
-    let parentDiscussionId: Int?
+    let user: User
+    let post: Post?
+    let discussion: Discussion?
     let upvote: Bool
+    let valid: Bool
 }

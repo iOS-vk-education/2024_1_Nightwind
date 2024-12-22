@@ -42,7 +42,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.frame = bounds
     }
 
-    func configure(with post: Post) {
-        postView.configure(with: post)
+    func configure(with post: Post, voteService: VoteService, userService: UserService) {
+        postView.configure(with: post, voteService: voteService, userService: userService)
     }
 }

@@ -166,7 +166,7 @@ class PostViewController: UIViewController, UITableViewDelegate, UITableViewData
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: post)
+            cell.configure(with: post, voteService: voteService, userService: userService)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "DiscussionCell", for: indexPath) as? DiscussionTableViewCell else {

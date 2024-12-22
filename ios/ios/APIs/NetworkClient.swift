@@ -17,6 +17,10 @@ protocol NetworkClient {
     
     func requestRaw(
         _ target: TargetType
+    ) async throws -> Response
+    
+    func requestString(
+        _ target: TargetType
     ) async throws -> String
 }
 
@@ -37,6 +41,14 @@ final class NetworkClientImpl: NetworkClient {
     }
     
     func requestRaw(
+        _ target: TargetType
+    ) async throws -> Response {
+        let multiTarget = MultiTarget(target)
+        let response = try await provider.request(multiTarget)
+        return response
+    }
+    
+    func requestString(
         _ target: TargetType
     ) async throws -> String {
         let multiTarget = MultiTarget(target)

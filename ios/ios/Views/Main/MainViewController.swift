@@ -131,7 +131,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
         let post = posts[indexPath.row]
         
-        cell.configure(with: post)
+        cell.configure(with: post, voteService: voteService, userService: userService)
         postsSeparatorSetUp(cell: cell)
         return cell
     }

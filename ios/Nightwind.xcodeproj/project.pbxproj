@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66DBA7812D189A5200732373 /* VoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DBA7802D189A4E00732373 /* VoteView.swift */; };
 		794DCE152D1725F8007E216E /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DCE142D1725F8007E216E /* WritePostView.swift */; };
 		94B150502D092ABF007B0256 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */; };
 		94B150512D092ABF007B0256 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1504D2D092ABF007B0256 /* PostView.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		66DBA7802D189A4E00732373 /* VoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteView.swift; sourceTree = "<group>"; };
 		794DCE142D1725F8007E216E /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
 		94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionTableViewCell.swift; sourceTree = "<group>"; };
 		94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		AA74C6402CF5F9BB00CE4396 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				66DBA7802D189A4E00732373 /* VoteView.swift */,
 				AA74C6412CF5F9CE00CE4396 /* InputField.swift */,
 			);
 			path = Components;
@@ -390,6 +393,7 @@
 			files = (
 				794DCE152D1725F8007E216E /* WritePostView.swift in Sources */,
 				AA74C6492CF5FC8F00CE4396 /* AuthViewModel.swift in Sources */,
+				66DBA7812D189A5200732373 /* VoteView.swift in Sources */,
 				AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */,
 				AA7DA6042CCD4D470003CB53 /* PostService.swift in Sources */,
 				AA7DA6062CCD4D580003CB53 /* DiscussionService.swift in Sources */,
