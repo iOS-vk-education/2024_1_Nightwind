@@ -80,7 +80,7 @@ public class Discussion {
     }
 
     public long getVoteCount() {
-        return votes.size();
+        return votes.stream().mapToLong((vote) -> vote.isUpvote() ? 1 : -1).sum();
     }
 
     public Date getCreationTime() {
