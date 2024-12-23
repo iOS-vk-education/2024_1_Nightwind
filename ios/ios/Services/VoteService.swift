@@ -29,5 +29,17 @@ final class VoteService {
         
         return response.data.isEmpty ? nil : try response.map(Vote.self)
     }
+    
+    func getPostVote(postId: Int, jwt: String) async throws -> Vote? {
+        let response = try await networkClient.requestRaw(VoteAPI.getPostVote(postId: postId, jwt: jwt))
+        
+        return response.data.isEmpty ? nil : try response.map(Vote.self)
+    }
+    
+    func getDiscussionVote(discussionId: Int, jwt: String) async throws -> Vote? {
+        let response = try await networkClient.requestRaw(VoteAPI.getDiscussionVote(discussionId: discussionId, jwt: jwt))
+        
+        return response.data.isEmpty ? nil : try response.map(Vote.self)
+    }
 }
 

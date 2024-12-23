@@ -13,6 +13,10 @@ protocol VoteViewDelegate: AnyObject {
 }
 
 class VoteView: UIView {
+    private static let UP_VOTE_IMAGE = UIImage(systemName: "arrowtriangle.up")
+    private static let UP_VOTE_CHOSEN_IMAGE = UIImage(systemName: "arrowtriangle.up.fill")
+    private static let DOWN_VOTE_IMAGE = UIImage(systemName: "arrowtriangle.down")
+    private static let DOWN_VOTE_CHOSEN_IMAGE = UIImage(systemName: "arrowtriangle.down.fill")
     private var voteCountLabel: UILabel!
     private var upvoteButton: UIButton!
     private var downvoteButton: UIButton!
@@ -47,14 +51,14 @@ class VoteView: UIView {
         voteCountLabel.translatesAutoresizingMaskIntoConstraints = false
         
         upvoteButton = UIButton(type: .system)
-        upvoteButton.setTitle("▲", for: .normal)
-        upvoteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        upvoteButton.setImage(VoteView.UP_VOTE_IMAGE, for: .normal)
+        upvoteButton.tintColor = .label
         upvoteButton.translatesAutoresizingMaskIntoConstraints = false
         upvoteButton.addTarget(self, action: #selector(handleUpvote), for: .touchUpInside)
         
         downvoteButton = UIButton(type: .system)
-        downvoteButton.setTitle("▼", for: .normal)
-        downvoteButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        downvoteButton.setImage(VoteView.DOWN_VOTE_IMAGE, for: .normal)
+        downvoteButton.tintColor = .label
         downvoteButton.translatesAutoresizingMaskIntoConstraints = false
         downvoteButton.addTarget(self, action: #selector(handleDownvote), for: .touchUpInside)
         
@@ -75,9 +79,19 @@ class VoteView: UIView {
         ])
     }
     
-    func updateVoteCount(to count: Int) {
+    private func updateVoteCount(to count: Int) {
         currentVoteCount = count
         voteCountLabel.text = "\(count)"
+    }
+    
+    private func updateVoteImages(vote: Vote?) {
+        if let vote = vote {
+            upvoteButton.setImage(vote.upvote ? VoteView.UP_VOTE_CHOSEN_IMAGE : VoteView.UP_VOTE_IMAGE, for: .normal)
+            downvoteButton.setImage(!vote.upvote  ? VoteView.DOWN_VOTE_CHOSEN_IMAGE : VoteView.DOWN_VOTE_IMAGE, for: .normal)
+        } else {
+            upvoteButton.setImage(VoteView.UP_VOTE_IMAGE, for: .normal)
+            downvoteButton.setImage(VoteView.DOWN_VOTE_IMAGE, for: .normal)
+        }
     }
     
     @objc private func handleUpvote() {
@@ -100,6 +114,7 @@ class VoteView: UIView {
                     } else {
                         updateVoteCount(to: upvote ? currentVoteCount - 1 : currentVoteCount + 1)
                     }
+                    updateVoteImages(vote: vote)
                 case .discussion(let id):
                     let vote = try await voteService.voteDiscussion(discussionId: id, jwt: jwt, upvote: upvote)
                     if let vote = vote {
@@ -107,6 +122,7 @@ class VoteView: UIView {
                     } else {
                         updateVoteCount(to: upvote ? currentVoteCount - 1 : currentVoteCount + 1)
                     }
+                    updateVoteImages(vote: vote)
                 }
                 delegate?.voteUpdated(to: currentVoteCount)
             } catch {
@@ -121,5 +137,18 @@ class VoteView: UIView {
         updateVoteCount(to: initialVoteCount)
         self.voteService = voteService
         self.userService = userService
+        guard let jwt = userService.getJwt() else { return }
+        Task {
+            do {
+                switch (voteType) {
+                case .post(let id):
+                    updateVoteImages(vote: try await voteService.getPostVote(postId: id, jwt: jwt))
+                case .discussion(let id):
+                    updateVoteImages(vote: try await voteService.getDiscussionVote(discussionId: id, jwt: jwt))
+                }
+            } catch {
+                print("Vote images update failed: \(error)")
+            }
+        }
     }
 }
