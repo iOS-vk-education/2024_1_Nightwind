@@ -34,7 +34,6 @@ class DiscussionTableViewCell: UITableViewCell {
         
         commentTextLabel.font = UIFont.systemFont(ofSize: 14)
         commentTextLabel.numberOfLines = 0
-        commentTextLabel.textColor = .white
         
         creationTimeLabel.font = UIFont.systemFont(ofSize: 12)
         creationTimeLabel.textColor = .lightGray
