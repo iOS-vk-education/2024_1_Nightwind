@@ -93,4 +93,36 @@ public class PostController {
         }
         return ResponseEntity.ok(post);  // 200 OK
     }
+
+    @Operation(summary = "Delete a post",
+            description = "Deletes the specified post. Only the author or an admin can perform this action.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Post deleted successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access"),
+            @ApiResponse(responseCode = "403", description = "Forbidden action"),
+            @ApiResponse(responseCode = "404", description = "Post not found")
+    })
+    @DeleteMapping("posts/{id}")
+    public ResponseEntity<Void> deletePost(
+            @Parameter(description = "ID of the post to delete", required = true)
+            @PathVariable long id,
+            @Parameter(description = "JWT token for authentication", required = true)
+            @RequestParam String jwt) {
+        User authenticatedUser = userService.findByJwt(jwt);
+        if (authenticatedUser == null) {
+            return ResponseEntity.status(401).build(); // 401 Unauthorized
+        }
+
+        Post postToDelete = postService.findById(id);
+        if (postToDelete == null) {
+            return ResponseEntity.status(404).build(); // 404 Not found
+        }
+
+        if (authenticatedUser.getId() != postToDelete.getUser().getId() && !authenticatedUser.isAdmin()) {
+            return ResponseEntity.status(403).build(); // 403 Forbidden
+        }
+
+        postService.deletePostById(id);
+        return ResponseEntity.ok().build(); // 200 OK
+    }
 }

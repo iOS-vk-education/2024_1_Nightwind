@@ -83,4 +83,8 @@ public class UserService {
                                         this.propertiesConfig.getShaSalt());
         return user;
     }
+
+    public void deleteUserById(long id) {
+        userRepository.deleteById(id);
+    }
 }

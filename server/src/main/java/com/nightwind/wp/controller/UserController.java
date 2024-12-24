@@ -118,4 +118,36 @@ public class UserController {
         User newUser = userService.addUserByCredentials(userCredentials);
         return ResponseEntity.status(201).body(newUser);  // 201 Created
     }
+
+    @Operation(summary = "Delete a user",
+            description = "Deletes the specified user. Only the user themselves or an admin can perform this action.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access"),
+            @ApiResponse(responseCode = "403", description = "Forbidden action"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @DeleteMapping("users/{id}")
+    public ResponseEntity<Void> deleteUser(
+            @Parameter(description = "ID of the user to delete", required = true)
+            @PathVariable long id,
+            @Parameter(description = "JWT token for authentication", required = true)
+            @RequestParam String jwt) {
+        User authenticatedUser = userService.findByJwt(jwt);
+        if (authenticatedUser == null) {
+            return ResponseEntity.status(401).build(); // 41 Unauthorized
+        }
+
+        User userToDelete = userService.findById(id);
+        if (userToDelete == null) {
+            return ResponseEntity.status(404).build(); // 404 Not found
+        }
+
+        if (authenticatedUser.getId() != userToDelete.getId() && !authenticatedUser.isAdmin()) {
+            return ResponseEntity.status(403).build(); // 403 Forbidden
+        }
+
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build(); // 200 Ok
+    }
 }

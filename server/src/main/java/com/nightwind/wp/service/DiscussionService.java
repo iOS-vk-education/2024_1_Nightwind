@@ -23,4 +23,8 @@ public class DiscussionService {
     public Discussion writeDiscussion(Discussion discussion) {
         return discussionRepository.save(discussion);
     }
+
+    public void deleteDiscussionById(long id) {
+        discussionRepository.deleteById(id);
+    }
 }

@@ -101,4 +101,8 @@ public class PostService {
 
         return keys;
     }
+
+    public void deletePostById(long id) {
+        postRepository.deleteById(id);
+    }
 }
