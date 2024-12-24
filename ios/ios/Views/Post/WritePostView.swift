@@ -81,36 +81,35 @@ class WritePostView: UIView {
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
         separatorLine.backgroundColor = .lightGray
     }
-    
+
     private func setupLayout() {
-        addSubviews( titleTextView, contentTextView, postButton, errorLabel, separatorLine)
-        
+        addSubviews(titleTextView, contentTextView, postButton, errorLabel, separatorLine)
+
         NSLayoutConstraint.activate([
-            
             // Title layout
             titleTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             titleTextView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             titleTextView.heightAnchor.constraint(equalToConstant: 60),
-            
+
             // Separator Line
             separatorLine.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 8),
             separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             separatorLine.heightAnchor.constraint(equalToConstant: 1),
-            
+
             // Content TextView layout
             contentTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             contentTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             contentTextView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 8),
-            contentTextView.heightAnchor.constraint(equalToConstant: 200),
-            
+            contentTextView.bottomAnchor.constraint(equalTo: postButton.topAnchor, constant: -16),
+
             // Post Button layout
             postButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            postButton.topAnchor.constraint(equalTo: contentTextView.bottomAnchor, constant: 16),
+            postButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             postButton.widthAnchor.constraint(equalToConstant: 80),
             postButton.heightAnchor.constraint(equalToConstant: 40),
-            
+
             // Error Label layout
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

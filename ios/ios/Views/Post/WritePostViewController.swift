@@ -13,6 +13,8 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
     private let postService: PostService
     private let writePostView = WritePostView()
     
+    private let scrollView = UIScrollView()
+    
     override func loadView() {
         view = writePostView
     }
@@ -101,12 +103,17 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            view.frame.origin.y = -keyboardFrame.height + view.safeAreaInsets.bottom
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardHeight = keyboardFrame.height
+
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = -keyboardHeight + self.view.safeAreaInsets.bottom
         }
     }
-    
+
     @objc private func keyboardWillHide(notification: Notification) {
-        view.frame.origin.y = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
     }
 }

@@ -49,7 +49,12 @@ class TabBarViewController: UITabBarController {
             generateViewController(
                 viewController: WritePostViewController(userService: userService, postService: postService),
                 title: "Write Post",
-                image: UIImage(systemName: "square.and.pencil"))
+                image: UIImage(systemName: "square.and.pencil")),
+            generateViewController(
+                viewController: UserViewController(userService: userService),
+                title: "User",
+                image: UIImage(systemName: "person.crop.circle")
+            )
         ]
     }
     

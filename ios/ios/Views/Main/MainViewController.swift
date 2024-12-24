@@ -74,6 +74,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         ])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadPosts() // Refresh the posts
+    }
     
     private func loadPosts() {
         Task {
@@ -138,9 +142,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let post = posts[indexPath.row]
-        
-        let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
-        self.navigationController?.pushViewController(controller, animated: false)
+        Task {
+            do {
+                let post = try await postService.getPostById(postId: post.id)
+                let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
+                self.navigationController?.pushViewController(controller, animated: false)
+            } catch {
+                print(error)
+            }
+        }
     }
 
     

@@ -31,6 +31,10 @@ final class UserService {
             UserAPI.registerUser(name: name, login: login, password: password),
             responseType: User.self)
     }
+    
+    func getUser() async throws -> User {
+        return try await networkClient.request(UserAPI.getUserByJWT(jwt: getJwt()!), responseType: User.self)
+    }
 
     func logout() {
         clearJwt()

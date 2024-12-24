@@ -129,13 +129,18 @@ extension PostViewController {
     // MARK: - Keyboard
     
     @objc private func keyboardWillShow(notification: Notification) {
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            view.frame.origin.y = -keyboardFrame.height + view.safeAreaInsets.bottom
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardHeight = keyboardFrame.height
+
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = -keyboardHeight + self.view.safeAreaInsets.bottom
         }
     }
-    
+
     @objc private func keyboardWillHide(notification: Notification) {
-        view.frame.origin.y = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
     }
 }
 
@@ -159,7 +164,7 @@ extension PostViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             let discussion = discussions[indexPath.row - 1]
-            cell.configure(with: discussion)
+            cell.configure(with: discussion, voteService: voteService, userService: userService)
             return cell
         }
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6618B5B02D1AE26500FD6519 /* DiscussionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618B5AF2D1AE26200FD6519 /* DiscussionView.swift */; };
+		668BF5F62D1A85D400B377A7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BF5F52D1A85CC00B377A7 /* UserViewController.swift */; };
 		66DBA7812D189A5200732373 /* VoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DBA7802D189A4E00732373 /* VoteView.swift */; };
 		794DCE152D1725F8007E216E /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DCE142D1725F8007E216E /* WritePostView.swift */; };
 		9442632F2D18DF43003A90F4 /* UIView+addSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442632E2D18DF41003A90F4 /* UIView+addSubviews.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6618B5AF2D1AE26200FD6519 /* DiscussionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionView.swift; sourceTree = "<group>"; };
+		668BF5F52D1A85CC00B377A7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		66DBA7802D189A4E00732373 /* VoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteView.swift; sourceTree = "<group>"; };
 		794DCE142D1725F8007E216E /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
 		9442632E2D18DF41003A90F4 /* UIView+addSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addSubviews.swift"; sourceTree = "<group>"; };
@@ -127,11 +131,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6618B5AE2D1AE25D00FD6519 /* Discussion */ = {
+			isa = PBXGroup;
+			children = (
+				6618B5AF2D1AE26200FD6519 /* DiscussionView.swift */,
+				94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */,
+			);
+			path = Discussion;
+			sourceTree = "<group>";
+		};
+		668BF5F42D1A85C800B377A7 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				668BF5F52D1A85CC00B377A7 /* UserViewController.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		94B1504F2D092ABF007B0256 /* Post */ = {
 			isa = PBXGroup;
 			children = (
 				BF1796F32D143A2200855593 /* WritePostViewController.swift */,
-				94B1504B2D092ABF007B0256 /* DiscussionTableViewCell.swift */,
 				94B1504C2D092ABF007B0256 /* PostTableViewCell.swift */,
 				94B1504D2D092ABF007B0256 /* PostView.swift */,
 				94B1504E2D092ABF007B0256 /* PostViewController.swift */,
@@ -265,6 +285,8 @@
 		AA7DA60F2CCD51090003CB53 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6618B5AE2D1AE25D00FD6519 /* Discussion */,
+				668BF5F42D1A85C800B377A7 /* User */,
 				BF1796F02D1420F300855593 /* TabBar */,
 				AA812A9D2CFE7A56006BB013 /* Main */,
 				AA74C64A2CF5FCBB00CE4396 /* Register */,
@@ -399,6 +421,7 @@
 				66DBA7812D189A5200732373 /* VoteView.swift in Sources */,
 				AA74C6332CF5EBF800CE4396 /* DiscussionAPI.swift in Sources */,
 				AA7DA6042CCD4D470003CB53 /* PostService.swift in Sources */,
+				668BF5F62D1A85D400B377A7 /* UserViewController.swift in Sources */,
 				AA7DA6062CCD4D580003CB53 /* DiscussionService.swift in Sources */,
 				94B150502D092ABF007B0256 /* PostTableViewCell.swift in Sources */,
 				94B150512D092ABF007B0256 /* PostView.swift in Sources */,
@@ -413,6 +436,7 @@
 				AA74C62C2CF5EA8000CE4396 /* VoteAPI.swift in Sources */,
 				AA74C6462CF5FC2D00CE4396 /* RegisterView.swift in Sources */,
 				AA74C6442CF5FAB600CE4396 /* AuthView.swift in Sources */,
+				6618B5B02D1AE26500FD6519 /* DiscussionView.swift in Sources */,
 				AA7544962CCD4439001C77C8 /* AppDelegate.swift in Sources */,
 				AAA32A272D0895EA004E16F1 /* NetworkClient.swift in Sources */,
 				AA74C63F2CF5F92600CE4396 /* Styles.swift in Sources */,
