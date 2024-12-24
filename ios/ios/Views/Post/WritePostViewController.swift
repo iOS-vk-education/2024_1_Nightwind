@@ -28,6 +28,9 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
         setupActions()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,15 +108,20 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
     @objc private func keyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardHeight = keyboardFrame.height
-
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y = -keyboardHeight + self.view.safeAreaInsets.bottom
+            self.scrollView.contentInset.bottom = keyboardHeight
+            self.scrollView.scrollIndicatorInsets.bottom = keyboardHeight
         }
     }
 
     @objc private func keyboardWillHide(notification: Notification) {
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y = 0
+            self.scrollView.contentInset.bottom = 0
+            self.scrollView.scrollIndicatorInsets.bottom = 0
         }
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

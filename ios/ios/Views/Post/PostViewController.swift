@@ -13,6 +13,8 @@ class PostViewController: UIViewController {
     private let voteService: VoteService
     private let userService: UserService
     
+    private var inputTextFieldBottomConstraint: NSLayoutConstraint!
+    
     private let tableView = UITableView()
     private let inputTextField: UITextField = {
         let textField = UITextField()
@@ -58,6 +60,10 @@ class PostViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        // Dismiss keyboard on tap
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
 }
 
@@ -98,24 +104,17 @@ extension PostViewController {
     }
     
     private func setupConstraints() {
+        inputTextFieldBottomConstraint = inputTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         NSLayoutConstraint.activate([
-            // TableView
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: inputTextField.topAnchor),
-            
-            // InputField
+
             inputTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             inputTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            inputTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            inputTextField.heightAnchor.constraint(equalToConstant: 44),
-            
-            // ScrollToTopButton
-            scrollToTopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            scrollToTopButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            scrollToTopButton.heightAnchor.constraint(equalToConstant: 44),
-            scrollToTopButton.widthAnchor.constraint(equalToConstant: 100),
+            inputTextFieldBottomConstraint,
+            inputTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
@@ -131,16 +130,21 @@ extension PostViewController {
     @objc private func keyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardHeight = keyboardFrame.height
-
+        inputTextFieldBottomConstraint.constant = -keyboardHeight
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y = -keyboardHeight + self.view.safeAreaInsets.bottom
+            self.view.layoutIfNeeded()
         }
     }
 
     @objc private func keyboardWillHide(notification: Notification) {
+        inputTextFieldBottomConstraint.constant = -8
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y = 0
+            self.view.layoutIfNeeded()
         }
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
