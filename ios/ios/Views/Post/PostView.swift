@@ -129,15 +129,9 @@ class PostView: UIView {
 
     func configure(with post: Post, voteService: VoteService, userService: UserService) {
         
-        let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "HH:mm dd-MM-yyyy"
-        
         displayNameLabel.text = post.user.name
         usernameLabel.text = "@\(post.user.login)"
-        creationTimeLabel.text = dateFormatterPrint.string(from:  dateFormatterGet.date(from: post.creationTime)!)
+        creationTimeLabel.text = post.creationTime.formattedDate()
         titleLabel.text = post.title
         textLabel.text = post.text
         viewCountLabel.text = "\(post.viewCount) views"
@@ -164,10 +158,14 @@ class PostView: UIView {
     }
 }
 
-extension Date {
+extension String {
     func formattedDate() -> String {
         let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "d HH:mm" // Формат: число, час:минуты
-        return dateFormatterGet.string(from: self)
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "HH:mm dd-MM-yyyy"
+        
+        return dateFormatterPrint.string(from: dateFormatterGet.date(from: self)!)
     }
 }
