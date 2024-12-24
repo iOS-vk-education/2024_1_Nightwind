@@ -91,8 +91,11 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
                 try await postService.createPost(jwt: userService.getJwt()!, title: title, text: text)
             } catch {}
         }
-        writePostView.titleTextView.text = ""
-        writePostView.contentTextView.text = ""
+        writePostView.titleTextView.text = "Post Title"
+        writePostView.titleTextView.textColor = .placeholderText
+        writePostView.contentTextView.text = "Write your thoughts here..."
+        writePostView.contentTextView.textColor = .placeholderText
+        
         dismiss(animated: true, completion: nil)
     }
     

@@ -96,7 +96,7 @@ class UserViewController: UIViewController {
     private func updateUI(with user: User) {
         nameLabel.text = user.name
         loginLabel.text = "@" + user.login
-        creationTimeLabel.text = "Joined: " + user.creationTime
+        creationTimeLabel.text = "Joined: " + user.creationTime.formattedDate()
     }
 
     @objc private func signOut() {

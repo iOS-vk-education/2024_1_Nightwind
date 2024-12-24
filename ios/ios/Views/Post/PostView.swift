@@ -128,14 +128,15 @@ class PostView: UIView {
     }
 
     func configure(with post: Post, voteService: VoteService, userService: UserService) {
+        
         displayNameLabel.text = post.user.name
         usernameLabel.text = "@\(post.user.login)"
-        creationTimeLabel.text = post.creationTime
+        creationTimeLabel.text = post.creationTime.formattedDate()
         titleLabel.text = post.title
         textLabel.text = post.text
         viewCountLabel.text = "\(post.viewCount) views"
         commentCountLabel.text = "\u{1F4AC} \(post.discussionCount)"
-
+        
         // Load avatar asynchronously
         let placeholderURL = URL(string: "https://avatar.iran.liara.run/public")!
         DispatchQueue.global().async {
@@ -154,5 +155,17 @@ class PostView: UIView {
             voteService: voteService,
             userService: userService
         )
+    }
+}
+
+extension String {
+    func formattedDate() -> String {
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "HH:mm dd-MM-yyyy"
+        
+        return dateFormatterPrint.string(from: dateFormatterGet.date(from: self)!)
     }
 }
