@@ -85,7 +85,7 @@ class DiscussionView: UIView {
         userNameLabel.text = discussion.user.name
         userLoginLabel.text = "@\(discussion.user.login)"
         commentTextLabel.text = discussion.text
-        creationTimeLabel.text = discussion.creationTime
+        creationTimeLabel.text = discussion.creationTime.formattedDate()
 
         voteView.configure(
             voteType: .discussion(id: discussion.id),
