@@ -1,6 +1,7 @@
 package com.nightwind.wp.controller;
 
 import com.nightwind.wp.domain.User;
+import com.nightwind.wp.form.UserCredentialsEditForm;
 import com.nightwind.wp.form.UserCredentialsEnter;
 import com.nightwind.wp.form.UserCredentialsRegister;
 import com.nightwind.wp.service.UserService;
@@ -149,5 +150,45 @@ public class UserController {
 
         userService.deleteUserById(id);
         return ResponseEntity.ok().build(); // 200 Ok
+    }
+
+    @Operation(summary = "Edit user profile",
+            description = "Allows a user to edit their profile or an admin to edit any user's profile.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User profile updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Validation errors"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access"),
+            @ApiResponse(responseCode = "403", description = "Forbidden action"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @PutMapping("users/{id}")
+    public ResponseEntity<Object> editUserProfile(
+            @Parameter(description = "ID of the user to edit", required = true) @PathVariable long id,
+            @Parameter(description = "Updated user profile", required = true) @RequestBody @Valid UserCredentialsEditForm userProfileEdit,
+            BindingResult bindingResult,
+            @Parameter(description = "JWT token for authentication", required = true) @RequestParam String jwt) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(getValidationErrors(bindingResult)); // 400 Bad Request
+        }
+
+        User authenticatedUser = userService.findByJwt(jwt);
+        if (authenticatedUser == null) {
+            return ResponseEntity.status(401).build(); // 401 Unauthorized
+        }
+
+        User userToEdit = userService.findById(id);
+        if (userToEdit == null) {
+            return ResponseEntity.status(404).build(); // 404 Not Found
+        }
+
+        if (authenticatedUser.getId() != userToEdit.getId() && !authenticatedUser.isAdmin()) {
+            return ResponseEntity.status(403).build(); // 403 Forbidden
+        }
+
+        userToEdit.setName(userProfileEdit.getName());
+        userToEdit.setLogin(userProfileEdit.getLogin());
+        userService.saveUser(userToEdit);
+
+        return ResponseEntity.ok(userToEdit); // 200 OK
     }
 }
