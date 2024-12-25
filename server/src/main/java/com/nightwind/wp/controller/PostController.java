@@ -5,6 +5,7 @@ import com.nightwind.wp.domain.User;
 import com.nightwind.wp.form.WritePostForm;
 import com.nightwind.wp.service.PostService;
 import com.nightwind.wp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -86,8 +87,12 @@ public class PostController {
     @GetMapping(value = {"/posts/{id}"})
     public ResponseEntity<Post> findPost(
             @Parameter(description = "ID of the post to retrieve", required = true)
-            @PathVariable long id) {
-        Post post = postService.getAndIncrementViewCount(id);
+            @PathVariable long id,
+            @Parameter(description = "JWT token for view mapping")
+            @RequestParam String jwt,
+            HttpServletRequest request) {
+        final String viewerIdentifier = getViewerIdentifier(jwt, request);
+        Post post = postService.getAndIncrementViewCount(id, viewerIdentifier);
         if (post == null) {
             return ResponseEntity.notFound().build();  // 404 Not Found
         }
@@ -124,5 +129,15 @@ public class PostController {
 
         postService.deletePostById(id);
         return ResponseEntity.ok().build(); // 200 OK
+    }
+
+    private String getViewerIdentifier(String jwt, HttpServletRequest request) {
+        if (jwt != null && !jwt.isBlank()) {
+            User user = userService.findByJwt(jwt);
+            if (user != null) {
+                return "user-" + user.getId();
+            }
+        }
+        return "ip-" + request.getRemoteAddr();
     }
 }

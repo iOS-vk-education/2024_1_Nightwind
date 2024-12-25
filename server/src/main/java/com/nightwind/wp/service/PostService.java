@@ -14,12 +14,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class PostService {
     private final PropertiesConfig propertiesConfig;
-
     private final PostRepository postRepository;
+
+    private final Map<Long, Map<String, Long>> viewTimestamps = new ConcurrentHashMap<>();
 
     public PostService(PropertiesConfig propertiesConfig,
                        PostRepository postRepository) {
@@ -47,15 +51,32 @@ public class PostService {
         return post;
     }
 
-    public Post getAndIncrementViewCount(Long postId) {
+    public Post getAndIncrementViewCount(Long postId, String viewerIdentifier) {
         Post post = postRepository.findById(postId).orElse(null);
 
-        if (post != null) {
+        if (post != null && shouldIncrementView(postId, viewerIdentifier)) {
             post.incrementViewCount();
             postRepository.save(post);
         }
 
         return post;
+    }
+
+    private boolean shouldIncrementView(long postId, String viewerIdentifier) {
+        long currentTime = System.currentTimeMillis();
+        long viewLimit = TimeUnit.MINUTES.toMillis(10);
+
+        viewTimestamps.putIfAbsent(postId, new ConcurrentHashMap<>());
+        Map<String, Long> postViews = viewTimestamps.get(postId);
+
+        Long lastViewTime = postViews.get(viewerIdentifier);
+
+        if (lastViewTime == null || currentTime - lastViewTime > viewLimit) {
+            postViews.put(viewerIdentifier, currentTime);
+            return true;
+        }
+
+        return false;
     }
 
     private List<String> saveMediaAndGetKeys(List<MultipartFile> media, String keyPrefix) throws IOException {
