@@ -25,10 +25,10 @@ struct RegisterView: View {
                 .font(.custom(Styles.FontFamily.ebGaramond, size: 24))
                 .foregroundColor(Styles.Light.text)
             
-            InputField(text: $viewModel.name, placeholder: "Name", error: viewModel.validationErrors["name"])
-            InputField(text: $viewModel.login, placeholder: "Login", error: viewModel.validationErrors["login"])
-            InputField(text: $viewModel.password, placeholder: "Password", isSecure: true, error: viewModel.validationErrors["password"])
-            InputField(text: $viewModel.confirmPassword, placeholder: "Confirm Password", isSecure: true)
+            InputField(text: $viewModel.name, placeholder: "Name", error: $viewModel.validationErrors["name"])
+            InputField(text: $viewModel.login, placeholder: "Login", error: $viewModel.validationErrors["login"])
+            InputField(text: $viewModel.password, placeholder: "Password", isSecure: true, error: $viewModel.validationErrors["password"])
+            InputField(text: $viewModel.confirmPassword, placeholder: "Confirm Password", isSecure: true, error: $viewModel.validationErrors["confirmPassword"])
             
             HStack {
                 Button(action: {

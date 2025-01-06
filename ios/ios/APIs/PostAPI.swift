@@ -13,7 +13,7 @@ import Moya
 enum PostAPI {
     case getPosts
     case createPost(jwt: String, title: String, text: String)
-    case getPostById(postId: Int)
+    case getPostById(postId: Int, jwt: String)
 }
 
 extension PostAPI: TargetType {
@@ -25,7 +25,7 @@ extension PostAPI: TargetType {
         switch self {
         case .getPosts:
             return "/api/posts"
-        case .getPostById(let postId):
+        case .getPostById(let postId, _):
             return "/api/posts/\(postId)"
         case .createPost:
             return "/api/posts"
@@ -45,8 +45,8 @@ extension PostAPI: TargetType {
         switch self {
         case .getPosts:
             return .requestPlain
-        case .getPostById(_):
-            return .requestPlain
+        case .getPostById(_, let jwt):
+            return .requestParameters(parameters: ["jwt": jwt], encoding: URLEncoding.default)
         case .createPost(let jwt, let title, let text):
             let params: [String: Any] = ["title": title, "text": text]
             return .requestCompositeParameters(bodyParameters: params, bodyEncoding: JSONEncoding.default, urlParameters: ["jwt": jwt])

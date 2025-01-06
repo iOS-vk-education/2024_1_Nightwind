@@ -15,14 +15,15 @@ struct InputField: View {
     @Binding var text: String
     var placeholder: String
     var isSecure: Bool = false
-    var error: String? = nil
-
+    @Binding var error: String?
+    
     var body: some View {
         VStack(alignment: .leading) {
             if isSecure {
                 SecureField(placeholder, text: $text)
                     .padding()
-                    .background(Styles.Light.full)
+                    .background(error != nil ? Styles.Light.errorBase : Styles.Light.full)
+                    .foregroundStyle(error != nil ? Styles.Light.errorText : Styles.Light.text)
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -35,10 +36,14 @@ struct InputField: View {
                         y: Styles.Shadow.EL2.y
                     )
                     .focused($isFocused)
+                    .onChange(of: text) {
+                        error = nil
+                    }
             } else {
                 TextField(placeholder, text: $text)
                     .padding()
-                    .background(Styles.Light.full)
+                    .background(error != nil ? Styles.Light.errorBase : Styles.Light.full)
+                    .foregroundStyle(error != nil ? Styles.Light.errorText : Styles.Light.text)
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -51,13 +56,17 @@ struct InputField: View {
                         y: Styles.Shadow.EL2.y
                     )
                     .focused($isFocused)
+                    .onChange(of: text) {
+                        error = nil
+                    }
             }
 
             if let error = error {
                 Text(error)
-                    .font(.caption)
-                    .foregroundColor(Styles.Light.errorText)
+                    .font(.custom(Styles.FontFamily.lato, size: 14))
+                    .foregroundColor(Styles.Light.error)
             }
         }
     }
 }
+

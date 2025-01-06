@@ -32,13 +32,13 @@ struct AuthView: View {
                         .foregroundColor(Styles.Light.text)
                 }
                 
-                InputField(text: $viewModel.login, placeholder: "Login", error: viewModel.validationErrors["login"])
-                InputField(text: $viewModel.password, placeholder: "Password", isSecure: true, error: viewModel.validationErrors["password"])
+                InputField(text: $viewModel.login, placeholder: "Login", error: $viewModel.validationErrors["login"])
+                InputField(text: $viewModel.password, placeholder: "Password", isSecure: true, error: $viewModel.validationErrors["password"])
                 
                 if let error = viewModel.error {
                     Text(error)
-                        .font(.caption)
-                        .foregroundColor(Styles.Light.errorText)
+                        .font(.custom(Styles.FontFamily.lato, size: 16))
+                        .foregroundColor(Styles.Light.error)
                 }
                     
                 HStack {

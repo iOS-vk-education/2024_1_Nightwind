@@ -26,9 +26,9 @@ final class PostService {
             PostAPI.createPost(jwt: jwt, title: title, text: text), responseType: Post.self)
     }
     
-    func getPostById(postId: Int) async throws -> Post {
+    func getPostById(postId: Int, jwt: String) async throws -> Post {
         return try await networkClient.request(
-            PostAPI.getPostById(postId: postId),
+            PostAPI.getPostById(postId: postId, jwt: jwt),
             responseType: Post.self)
     }
 }

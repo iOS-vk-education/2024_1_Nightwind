@@ -15,7 +15,7 @@ enum APIError: Error {
     case unknownError
 
     init(statusCode: Int, validationErrors: [String: String]) {
-        self = .serverError(statusCode, [:])
+        self = .serverError(statusCode, validationErrors)
     }
 }
 

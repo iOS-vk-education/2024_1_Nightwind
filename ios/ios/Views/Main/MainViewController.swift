@@ -144,7 +144,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let post = posts[indexPath.row]
         Task {
             do {
-                let post = try await postService.getPostById(postId: post.id)
+                let post = try await postService.getPostById(postId: post.id, jwt: userService.getJwt()!)
                 let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
                 self.navigationController?.pushViewController(controller, animated: false)
             } catch {

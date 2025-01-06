@@ -27,6 +27,7 @@ struct Styles {
         static let trace = Color(hex: "#b0b0b0")
         static let base = Color(hex: "#f6f6f6")
         static let full = Color.white
+        static let error = Color.red
     }
     
     struct FontFamily {
