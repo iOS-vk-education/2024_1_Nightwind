@@ -1,18 +1,12 @@
 package com.nightwind.wp.form;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class UserCredentialsEditForm {
-    @NotBlank
-    @Size(min = 1, max = 100)
+    @NotBlank(message = "Name cannot not be blank")
+    @Size(min = 1, max = 64, message = "Name must be of size between 1 and 64 characters")
     private String name;
-
-    @NotBlank
-    @Size(min = 2, max = 24)
-    @Pattern(regexp = "[a-zA-Z]{2,24}", message = "Expected Latin letters")
-    private String login;
 
     public String getName() {
         return name;
@@ -20,13 +14,5 @@ public class UserCredentialsEditForm {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 }

@@ -186,7 +186,6 @@ public class UserController {
         }
 
         userToEdit.setName(userProfileEdit.getName());
-        userToEdit.setLogin(userProfileEdit.getLogin());
         userService.saveUser(userToEdit);
 
         return ResponseEntity.ok(userToEdit); // 200 OK
