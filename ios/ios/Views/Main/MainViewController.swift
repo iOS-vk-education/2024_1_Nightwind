@@ -8,8 +8,7 @@
 import UIKit
 
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ObservableObject {
-    weak var root: TabBarViewController?
+class MainViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var jwtLabel: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
@@ -93,8 +92,41 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
 
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {}
+
+    @IBAction func signOutTouchUpInside(_ sender: UIButton) {
+        userService.logout()
+        jwtLabel.text = nil
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
+        let post = posts[indexPath.row]
+        print(indexPath.row, " !!!")
+        postsSeparatorSetUp(cell: cell)
+        cell.configure(with: post, showInfo: true, startTitleView: UIView(), voteService: voteService, userService: userService)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        Task {
+            do {
+                let post = try await postService.getPostById(postId: post.id, jwt: userService.getJwt()!)
+                let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
+                self.navigationController?.pushViewController(controller, animated: false)
+            } catch {
+                print(error)
+            }
+        }
     }
     
     private func postsSeparatorSetUp(cell: UITableViewCell) {
@@ -106,7 +138,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSLayoutConstraint.activate([
             postsSeparator.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
             postsSeparator.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
-            postsSeparator.topAnchor.constraint(equalTo: cell.bottomAnchor),
+            postsSeparator.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
             postsSeparator.heightAnchor.constraint(equalToConstant: 12)
         ])
         
@@ -135,36 +167,4 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         ])
     }
     
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
-        let post = posts[indexPath.row]
-        
-        
-        cell.configure(with: post, showInfo: true, startTitleView: UIView(), voteService: voteService, userService: userService)
-        postsSeparatorSetUp(cell: cell)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
-        Task {
-            do {
-                let post = try await postService.getPostById(postId: post.id, jwt: userService.getJwt()!)
-                let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
-                self.navigationController?.pushViewController(controller, animated: false)
-            } catch {
-                print(error)
-            }
-        }
-    }
-
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {}
-
-    @IBAction func signOutTouchUpInside(_ sender: UIButton) {
-        userService.logout()
-        jwtLabel.text = nil
-        root?.root?.popTabBarView()
-    }
 }
