@@ -19,15 +19,17 @@ class PostView: UIView {
     private let commentCountLabel = UILabel()
     private let separatorView = UIView()
     private let avatarImageView = UIImageView()
+    private var showInfoFlag = Bool()
+    private var titleView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+//        setupView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupView()
+//        setupView()
     }
 
     private func setupView() {
@@ -74,60 +76,101 @@ class PostView: UIView {
         usernameAndDateStack.axis = .horizontal
         usernameAndDateStack.distribution = .equalSpacing
         usernameAndDateStack.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubviews(avatarImageView, displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountLabel)
-
+        
+        displayNameLabel.translatesAutoresizingMaskIntoConstraints = false;
+        
+        if (showInfoFlag) {
+            addSubviews(avatarImageView, displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountLabel)
+            
+            NSLayoutConstraint.activate([
+                // Avatar
+                avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+                avatarImageView.widthAnchor.constraint(equalToConstant: 38),
+                avatarImageView.heightAnchor.constraint(equalToConstant: 38),
+                
+                // Display name
+                displayNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
+                displayNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+                
+                // Username and date
+                usernameAndDateStack.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
+                usernameAndDateStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+                usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
+                
+                // Title
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+                titleLabel.topAnchor.constraint(equalTo: usernameAndDateStack.bottomAnchor, constant: 12)
+            ])
+        } else {
+            titleView.addSubview(avatarImageView)
+            NSLayoutConstraint.activate([
+                // Avatar
+                avatarImageView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
+                avatarImageView.topAnchor.constraint(equalTo: titleView.topAnchor),
+                avatarImageView.widthAnchor.constraint(equalToConstant: 38),
+                avatarImageView.heightAnchor.constraint(equalToConstant: 38),
+            ])
+            
+            titleView.addSubview(displayNameLabel)
+            NSLayoutConstraint.activate([
+                // Display name
+                displayNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
+                displayNameLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -8),
+                displayNameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
+            ])
+            
+            titleView.addSubview(usernameAndDateStack)
+            NSLayoutConstraint.activate([
+                // Username and date
+                usernameAndDateStack.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
+                usernameAndDateStack.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -8),
+                usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
+            ])
+            
+            
+            addSubviews(titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountLabel)
+            NSLayoutConstraint.activate([
+                // Title
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+            ])
+        }
+        
         NSLayoutConstraint.activate([
-            // Avatar
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 38),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 38),
-
-            // Display name
-            displayNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
-            displayNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-
-            // Username and date
-            usernameAndDateStack.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
-            usernameAndDateStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
-
-            // Title
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: usernameAndDateStack.bottomAnchor, constant: 12),
-
             // Text
             textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             textLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-
+            
             // Separator
             separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             separatorView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 16),
             separatorView.heightAnchor.constraint(equalToConstant: 1),
-
+            
             // Vote view
             voteView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             voteView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 12),
             voteView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-
+            
             // View count
             viewCountLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             viewCountLabel.topAnchor.constraint(equalTo: voteView.topAnchor),
-
+            
             // Comment count
             commentCountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             commentCountLabel.topAnchor.constraint(equalTo: voteView.topAnchor),
-
+            
             // Bottom constraint
             commentCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
+        
     }
 
-    func configure(with post: Post, voteService: VoteService, userService: UserService) {
+    func configure(with post: Post, showInfo: Bool, startTitleView: UIView, voteService: VoteService, userService: UserService) {
         
         displayNameLabel.text = post.user.name
         usernameLabel.text = "@\(post.user.login)"
@@ -136,6 +179,8 @@ class PostView: UIView {
         textLabel.text = post.text
         viewCountLabel.text = "\(post.viewCount) views"
         commentCountLabel.text = "\u{1F4AC} \(post.discussionCount)"
+        showInfoFlag = showInfo
+        titleView = startTitleView
         
         // Load avatar asynchronously
         let placeholderURL = URL(string: "https://avatar.iran.liara.run/public")!
@@ -155,5 +200,8 @@ class PostView: UIView {
             voteService: voteService,
             userService: userService
         )
+        
+        
+        setupView()
     }
 }

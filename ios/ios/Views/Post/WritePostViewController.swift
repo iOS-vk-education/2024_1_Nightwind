@@ -11,7 +11,10 @@ import UIKit
 class WritePostViewController: UIViewController, UITextViewDelegate, ObservableObject {
     private let userService: UserService
     private let postService: PostService
+    private let voteService: VoteService
+    private let discussionService: DiscussionService
     private let writePostView = WritePostView()
+    
     
     private let scrollView = UIScrollView()
     
@@ -21,7 +24,14 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barStyle = .black
+    
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Styles.Light.base)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationItem.title = "Nightwind";
+
         writePostView.titleTextView.delegate = self
         writePostView.contentTextView.delegate = self
         
@@ -41,9 +51,11 @@ class WritePostViewController: UIViewController, UITextViewDelegate, ObservableO
         super.viewWillDisappear(animated)
     }
     
-    init(userService: UserService, postService: PostService) {
+    init(userService: UserService, postService: PostService, voteService: VoteService, discussionService: DiscussionService) {
         self.userService = userService
         self.postService = postService
+        self.voteService = voteService
+        self.discussionService = discussionService
         super.init(nibName: nil, bundle: nil)
         
     }

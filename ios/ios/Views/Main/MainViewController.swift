@@ -38,19 +38,24 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-    
 //        jwtLabel.isUserInteractionEnabled = false
 //        jwtLabel.text = userService.getJwt()
         
         
-        setupTableView()
-        loadPosts()
-        
-        self.navigationItem.hidesBackButton = true
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Styles.Light.base)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationItem.title = "Nightwind";
+
+    
         if let navigationController = navigationController {
             navigationController.interactivePopGestureRecognizer?.isEnabled = false
         }
+        
+        setupTableView()
+        loadPosts()
     }
         
     private func setupTableView() {
@@ -67,10 +72,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.estimatedRowHeight = 300
     
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -135,7 +140,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
         let post = posts[indexPath.row]
         
-        cell.configure(with: post, voteService: voteService, userService: userService)
+        
+        cell.configure(with: post, showInfo: true, startTitleView: UIView(), voteService: voteService, userService: userService)
         postsSeparatorSetUp(cell: cell)
         return cell
     }

@@ -31,6 +31,7 @@ class ViewController: UIViewController, ObservableObject {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addView()
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         if userService.getJwt() != nil {
             pushTabBarView()
         }
