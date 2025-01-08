@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6618B5B02D1AE26500FD6519 /* DiscussionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6618B5AF2D1AE26200FD6519 /* DiscussionView.swift */; };
 		662AE3DF2D1B0B2E00FF81A3 /* String+formattedDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662AE3DE2D1B0B2200FF81A3 /* String+formattedDate.swift */; };
+		663B4CEC2D2DE8A3007C42ED /* UIStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663B4CEB2D2DE89B007C42ED /* UIStyles.swift */; };
+		663B4CEF2D2E8667007C42ED /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 663B4CEE2D2E8667007C42ED /* SVGKit */; };
+		663B4CF12D2E8667007C42ED /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 663B4CF02D2E8667007C42ED /* SVGKitSwift */; };
 		668BF5F62D1A85D400B377A7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668BF5F52D1A85CC00B377A7 /* UserViewController.swift */; };
 		66DBA7812D189A5200732373 /* VoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DBA7802D189A4E00732373 /* VoteView.swift */; };
 		794DCE152D1725F8007E216E /* WritePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794DCE142D1725F8007E216E /* WritePostView.swift */; };
@@ -66,6 +69,7 @@
 /* Begin PBXFileReference section */
 		6618B5AF2D1AE26200FD6519 /* DiscussionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionView.swift; sourceTree = "<group>"; };
 		662AE3DE2D1B0B2200FF81A3 /* String+formattedDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+formattedDate.swift"; sourceTree = "<group>"; };
+		663B4CEB2D2DE89B007C42ED /* UIStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStyles.swift; sourceTree = "<group>"; };
 		668BF5F52D1A85CC00B377A7 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		66DBA7802D189A4E00732373 /* VoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteView.swift; sourceTree = "<group>"; };
 		794DCE142D1725F8007E216E /* WritePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePostView.swift; sourceTree = "<group>"; };
@@ -123,6 +127,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663B4CF12D2E8667007C42ED /* SVGKitSwift in Frameworks */,
+				663B4CEF2D2E8667007C42ED /* SVGKit in Frameworks */,
 				AA74C6382CF5ED3E00CE4396 /* Moya in Frameworks */,
 				AA74C6362CF5ED3E00CE4396 /* CombineMoya in Frameworks */,
 				AA74C63C2CF5ED3E00CE4396 /* RxMoya in Frameworks */,
@@ -184,6 +190,7 @@
 		AA74C63D2CF5F91200CE4396 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				663B4CEB2D2DE89B007C42ED /* UIStyles.swift */,
 				AA74C63E2CF5F92600CE4396 /* Styles.swift */,
 			);
 			path = Styles;
@@ -348,6 +355,8 @@
 				AA74C6372CF5ED3E00CE4396 /* Moya */,
 				AA74C6392CF5ED3E00CE4396 /* ReactiveMoya */,
 				AA74C63B2CF5ED3E00CE4396 /* RxMoya */,
+				663B4CEE2D2E8667007C42ED /* SVGKit */,
+				663B4CF02D2E8667007C42ED /* SVGKitSwift */,
 			);
 			productName = ios;
 			productReference = AA7544922CCD4439001C77C8 /* Nightwind.app */;
@@ -380,6 +389,7 @@
 			mainGroup = AA7544892CCD4439001C77C8;
 			packageReferences = (
 				AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */,
+				663B4CED2D2E8667007C42ED /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			productRefGroup = AA7544932CCD4439001C77C8 /* Products */;
 			projectDirPath = "";
@@ -445,6 +455,7 @@
 				662AE3DF2D1B0B2E00FF81A3 /* String+formattedDate.swift in Sources */,
 				AA74C63F2CF5F92600CE4396 /* Styles.swift in Sources */,
 				AA7DA60D2CCD4DA60003CB53 /* Discussion.swift in Sources */,
+				663B4CEC2D2DE8A3007C42ED /* UIStyles.swift in Sources */,
 				AA74C6422CF5F9CE00CE4396 /* InputField.swift in Sources */,
 				AA7DD17A2CD8069D0076166C /* Vote.swift in Sources */,
 				9442632F2D18DF43003A90F4 /* UIView+addSubviews.swift in Sources */,
@@ -673,6 +684,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		663B4CED2D2E8667007C42ED /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -684,6 +703,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		663B4CEE2D2E8667007C42ED /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663B4CED2D2E8667007C42ED /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
+		663B4CF02D2E8667007C42ED /* SVGKitSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 663B4CED2D2E8667007C42ED /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKitSwift;
+		};
 		AA74C6352CF5ED3E00CE4396 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AA74C6342CF5ED3E00CE4396 /* XCRemoteSwiftPackageReference "Moya" */;

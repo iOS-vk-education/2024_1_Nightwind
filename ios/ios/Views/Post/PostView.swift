@@ -16,9 +16,8 @@ class PostView: UIView {
     private let textLabel = UILabel()
     private let voteView = VoteView()
     private let viewCountLabel = UILabel()
-    private let commentCountLabel = UILabel()
+    private let commentCountView = UIView()
     private let separatorView = UIView()
-    private let avatarImageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,13 +31,13 @@ class PostView: UIView {
 
     private func setupView() {
         setupLabels()
-        setupImageView()
+        setupCommentCountView()
         setupSeparator()
         setupLayout()
     }
 
     private func setupLabels() {
-        displayNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        displayNameLabel.font = UIFont(name: UIStyles.FontFamily.lato.fontName, size: 16)
 
         usernameLabel.font = UIFont.systemFont(ofSize: 12)
         usernameLabel.textColor = .gray
@@ -47,21 +46,41 @@ class PostView: UIView {
         creationTimeLabel.textColor = .gray
         creationTimeLabel.textAlignment = .right
 
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.font = UIFont(name: UIStyles.FontFamily.ebGaramond.fontName, size: 24)
         titleLabel.numberOfLines = 0
 
-        textLabel.font = UIFont.systemFont(ofSize: 14)
+        textLabel.font = UIFont(name: UIStyles.FontFamily.lato.fontName, size: 14)
         textLabel.numberOfLines = 0
 
-        viewCountLabel.font = UIFont.systemFont(ofSize: 14)
-        commentCountLabel.font = UIFont.systemFont(ofSize: 14)
+        viewCountLabel.font = UIFont.systemFont(ofSize: 13)
+        viewCountLabel.textColor = UIStyles.Light.script
     }
 
-    private func setupImageView() {
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarImageView.layer.cornerRadius = 16
-        avatarImageView.clipsToBounds = true
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupCommentCountView() {
+        commentCountView.backgroundColor = UIStyles.Light.tetriaryBase
+        commentCountView.layer.cornerRadius = 16
+        commentCountView.clipsToBounds = true
+
+        let iconImage = UIImage(named: "thread")?.withTintColor(UIStyles.Light.tetriaryText)
+
+        let countLabel = UILabel()
+        countLabel.font = UIFont.systemFont(ofSize: 14)
+        countLabel.textColor = UIStyles.Light.tetriaryText
+
+        let stackView = UIStackView(arrangedSubviews: [UIImageView(image: iconImage), countLabel])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
+
+        commentCountView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: commentCountView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: commentCountView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: commentCountView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: commentCountView.bottomAnchor)
+        ])
     }
 
     private func setupSeparator() {
@@ -72,25 +91,18 @@ class PostView: UIView {
     private func setupLayout() {
         let usernameAndDateStack = UIStackView(arrangedSubviews: [usernameLabel, creationTimeLabel])
         usernameAndDateStack.axis = .horizontal
-        usernameAndDateStack.distribution = .equalSpacing
+        usernameAndDateStack.spacing = 4
         usernameAndDateStack.translatesAutoresizingMaskIntoConstraints = false
 
-        addSubviews(avatarImageView, displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountLabel)
+        addSubviews(displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountView)
 
         NSLayoutConstraint.activate([
-            // Avatar
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 38),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 38),
-
             // Display name
-            displayNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
+            displayNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             displayNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
 
             // Username and date
-            usernameAndDateStack.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
-            usernameAndDateStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            usernameAndDateStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
 
             // Title
@@ -98,54 +110,42 @@ class PostView: UIView {
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             titleLabel.topAnchor.constraint(equalTo: usernameAndDateStack.bottomAnchor, constant: 12),
 
-            // Text
-            textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            textLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-
             // Separator
             separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            separatorView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 16),
+            separatorView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             separatorView.heightAnchor.constraint(equalToConstant: 1),
+
+            // Text
+            textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            textLabel.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 16),
 
             // Vote view
             voteView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            voteView.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 12),
+            voteView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 12),
             voteView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
 
             // View count
-            viewCountLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            viewCountLabel.topAnchor.constraint(equalTo: voteView.topAnchor),
+            viewCountLabel.trailingAnchor.constraint(equalTo: commentCountView.leadingAnchor, constant: -8),
+            viewCountLabel.centerYAnchor.constraint(equalTo: commentCountView.centerYAnchor),
 
             // Comment count
-            commentCountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            commentCountLabel.topAnchor.constraint(equalTo: voteView.topAnchor),
-
-            // Bottom constraint
-            commentCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            commentCountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            commentCountView.centerYAnchor.constraint(equalTo: voteView.centerYAnchor)
         ])
     }
 
     func configure(with post: Post, voteService: VoteService, userService: UserService) {
-        
         displayNameLabel.text = post.user.name
         usernameLabel.text = "@\(post.user.login)"
-        creationTimeLabel.text = post.creationTime.formattedDate()
+        creationTimeLabel.text = "\u{00B7} \(post.creationTime.formattedDate())"
         titleLabel.text = post.title
         textLabel.text = post.text
         viewCountLabel.text = "\(post.viewCount) views"
-        commentCountLabel.text = "\u{1F4AC} \(post.discussionCount)"
         
-        // Load avatar asynchronously
-        let placeholderURL = URL(string: "https://avatar.iran.liara.run/public")!
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: placeholderURL),
-               let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.avatarImageView.image = image
-                }
-            }
+        if let countLabel = (commentCountView.subviews.first as? UIStackView)?.arrangedSubviews.last as? UILabel {
+            countLabel.text = "\(post.discussionCount)"
         }
 
         // Configure vote view
