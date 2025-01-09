@@ -79,7 +79,7 @@ class PostView: UIView {
         
         displayNameLabel.translatesAutoresizingMaskIntoConstraints = false;
         
-        if (showInfoFlag) {
+        if showInfoFlag {
             addSubviews(avatarImageView, displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountLabel)
             
             NSLayoutConstraint.activate([

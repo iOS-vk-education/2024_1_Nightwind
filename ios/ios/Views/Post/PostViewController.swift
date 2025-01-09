@@ -16,6 +16,9 @@ class PostViewController: UIViewController {
     private var inputTextFieldBottomConstraint: NSLayoutConstraint!
     
     private let tableView = UITableView()
+    private var startTitleView: UIView = UIView()
+    private var scrollTitleView: UIView = UIView()
+    
     private let inputTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Start a discussion"
@@ -52,9 +55,6 @@ class PostViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    private var startTitleView: UIView = UIView()
-    private var scrollTitleView: UIView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +85,7 @@ class PostViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         self.tabBarController?.tabBar.isHidden = false
         navigationController?.popViewController(animated: true)
     }

@@ -8,7 +8,7 @@
 import UIKit
 
 
-class MainViewController: UIViewController, UITableViewDelegate {
+final class MainViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var jwtLabel: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
@@ -43,10 +43,10 @@ class MainViewController: UIViewController, UITableViewDelegate {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(Styles.Light.base)
+        appearance.backgroundColor = Constants.NavigationBarAppereance.color
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationItem.title = "Nightwind";
+        self.navigationItem.title = Constants.NavigationBarAppereance.title
 
     
         if let navigationController = navigationController {
@@ -95,9 +95,12 @@ class MainViewController: UIViewController, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {}
 
-    @IBAction func signOutTouchUpInside(_ sender: UIButton) {
-        userService.logout()
-        jwtLabel.text = nil
+}
+
+enum Constants {
+    enum NavigationBarAppereance {
+        static let color = UIColor(Styles.Light.base)
+        static let title = "Nightwind"
     }
 }
 
@@ -110,7 +113,6 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
         let post = posts[indexPath.row]
-        print(indexPath.row, " !!!")
         postsSeparatorSetUp(cell: cell)
         cell.configure(with: post, showInfo: true, startTitleView: UIView(), voteService: voteService, userService: userService)
         return cell
@@ -124,7 +126,7 @@ extension MainViewController: UITableViewDataSource {
                 let controller = PostViewController(post: post, discussionService: discussionService, voteService: voteService, userService: userService)
                 self.navigationController?.pushViewController(controller, animated: false)
             } catch {
-                print(error)
+                debugPrint(error)
             }
         }
     }
