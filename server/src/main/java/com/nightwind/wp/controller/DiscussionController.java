@@ -139,4 +139,26 @@ public class DiscussionController {
         return ResponseEntity.ok().build(); // 200 Ok
     }
 
+    @Operation(summary = "Retrieve all discussions by user ID",
+            description = "Fetches a list of discussions created by a specific user.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user's discussions"),
+            @ApiResponse(responseCode = "400", description = "Invalid user ID provided"),
+            @ApiResponse(responseCode = "404", description = "No discussions found for the specified user")
+    })
+    @GetMapping("/discussions/user/{userId}")
+    public ResponseEntity<List<Discussion>> findDiscussionsByUserId(
+            @Parameter(description = "ID of the user whose discussions are to be retrieved", required = true)
+            @PathVariable Long userId) {
+        if (userId == null || userId <= 0) {
+            return ResponseEntity.badRequest().build(); // 400 Bad Request
+        }
+
+        List<Discussion> discussions = discussionService.findAllByUserId(userId);
+        if (discussions == null || discussions.isEmpty()) {
+            return ResponseEntity.status(404).build(); // 404 Not Found
+        }
+
+        return ResponseEntity.ok(discussions); // 200 OK
+    }
 }

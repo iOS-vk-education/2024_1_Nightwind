@@ -126,4 +126,8 @@ public class PostService {
     public void deletePostById(long id) {
         postRepository.deleteById(id);
     }
+
+    public List<Post> findAllByUserId(Long userId) {
+        return postRepository.findAllByUserId(userId);
+    }
 }

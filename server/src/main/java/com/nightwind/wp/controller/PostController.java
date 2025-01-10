@@ -131,6 +131,29 @@ public class PostController {
         return ResponseEntity.ok().build(); // 200 OK
     }
 
+    @Operation(summary = "Retrieve all posts by user ID",
+            description = "Fetches a list of posts created by a specific user.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user's posts"),
+            @ApiResponse(responseCode = "400", description = "Invalid user ID provided"),
+            @ApiResponse(responseCode = "404", description = "No posts found for the specified user")
+    })
+    @GetMapping("/posts/user/{userId}")
+    public ResponseEntity<List<Post>> findPostsByUserId(
+            @Parameter(description = "ID of the user whose posts are to be retrieved", required = true)
+            @PathVariable Long userId) {
+        if (userId == null || userId <= 0) {
+            return ResponseEntity.badRequest().build(); // 400 Bad Request
+        }
+
+        List<Post> posts = postService.findAllByUserId(userId);
+        if (posts == null || posts.isEmpty()) {
+            return ResponseEntity.status(404).build(); // 404 Not Found
+        }
+
+        return ResponseEntity.ok(posts); // 200 OK
+    }
+
     private String getViewerIdentifier(String jwt, HttpServletRequest request) {
         if (jwt != null && !jwt.isBlank()) {
             User user = userService.findByJwt(jwt);

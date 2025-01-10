@@ -1,5 +1,6 @@
 package com.nightwind.wp.service;
 
+import com.nightwind.wp.domain.Post;
 import org.springframework.stereotype.Service;
 import com.nightwind.wp.domain.Discussion;
 import com.nightwind.wp.repository.DiscussionRepository;
@@ -26,5 +27,9 @@ public class DiscussionService {
 
     public void deleteDiscussionById(long id) {
         discussionRepository.deleteById(id);
+    }
+
+    public List<Discussion> findAllByUserId(Long userId) {
+        return discussionRepository.findAllByUserId(userId);
     }
 }
