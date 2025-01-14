@@ -33,7 +33,7 @@ class PostTableViewCell: UITableViewCell {
             postView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             postView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            postView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            postView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
 
@@ -42,7 +42,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.frame = bounds
     }
 
-    func configure(with post: Post, voteService: VoteService, userService: UserService) {
-        postView.configure(with: post, voteService: voteService, userService: userService)
+    func configure(with post: Post, showInfo: Bool, startTitleView: UIView, voteService: VoteService, userService: UserService) {
+        postView.configure(with: post, showInfo: showInfo, startTitleView: startTitleView, voteService: voteService, userService: userService)
     }
 }

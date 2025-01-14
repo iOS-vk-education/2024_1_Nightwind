@@ -18,20 +18,21 @@ class PostView: UIView {
     private let viewCountLabel = UILabel()
     private let commentCountView = UIView()
     private let separatorView = UIView()
+    private var showInfoFlag = Bool()
+    private var titleView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupCommentCountView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupView()
+        setupCommentCountView()
     }
 
     private func setupView() {
         setupLabels()
-        setupCommentCountView()
         setupSeparator()
         setupLayout()
     }
@@ -57,11 +58,14 @@ class PostView: UIView {
     }
 
     private func setupCommentCountView() {
-        commentCountView.backgroundColor = UIStyles.Light.tetriaryBase
+        // Clear existing subviews to prevent stacking
+        commentCountView.subviews.forEach { $0.removeFromSuperview() }
+        
+        commentCountView.backgroundColor = UIStyles.Light.primaryBase
         commentCountView.layer.cornerRadius = 16
         commentCountView.clipsToBounds = true
 
-        let iconImage = UIImage(named: "thread")?.withTintColor(UIStyles.Light.tetriaryText)
+        let iconImage = UIImage(named: "thread")?.withTintColor(UIStyles.Light.primaryText)
 
         let countLabel = UILabel()
         countLabel.font = UIFont.systemFont(ofSize: 14)
@@ -91,25 +95,56 @@ class PostView: UIView {
     private func setupLayout() {
         let usernameAndDateStack = UIStackView(arrangedSubviews: [usernameLabel, creationTimeLabel])
         usernameAndDateStack.axis = .horizontal
-        usernameAndDateStack.spacing = 4
-        usernameAndDateStack.translatesAutoresizingMaskIntoConstraints = false
-
-        addSubviews(displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountView)
-
+        usernameAndDateStack.spacing = 2
+        
+        usernameAndDateStack
+            .translatesAutoresizingMaskIntoConstraints = false
+        
+        displayNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        if showInfoFlag {
+            addSubviews(displayNameLabel, usernameAndDateStack, titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountView)
+            
+            NSLayoutConstraint.activate([
+                // Display name
+                displayNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                displayNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+                
+                // Username and date
+                usernameAndDateStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),                usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
+                
+                // Title
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+                titleLabel.topAnchor.constraint(equalTo: usernameAndDateStack.bottomAnchor, constant: 12)
+            ])
+        } else {
+            titleView.addSubview(displayNameLabel)
+            NSLayoutConstraint.activate([
+                // Display name
+                displayNameLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor, constant: -8),
+                displayNameLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor, constant: -8),
+                displayNameLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
+            ])
+            
+            titleView.addSubview(usernameAndDateStack)
+            NSLayoutConstraint.activate([
+                // Username and date
+                usernameAndDateStack.leadingAnchor.constraint(equalTo: titleView.leadingAnchor, constant: -8),
+                usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
+            ])
+            
+            
+            addSubviews(titleLabel, textLabel, separatorView, voteView, viewCountLabel, commentCountView)
+            NSLayoutConstraint.activate([
+                // Title
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+                titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12)
+            ])
+        }
+        
         NSLayoutConstraint.activate([
-            // Display name
-            displayNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            displayNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-
-            // Username and date
-            usernameAndDateStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            usernameAndDateStack.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor, constant: 2),
-
-            // Title
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: usernameAndDateStack.bottomAnchor, constant: 12),
-
             // Separator
             separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
@@ -120,7 +155,7 @@ class PostView: UIView {
             textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             textLabel.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: 16),
-
+            
             // Vote view
             voteView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             voteView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 12),
@@ -129,20 +164,25 @@ class PostView: UIView {
             // View count
             viewCountLabel.trailingAnchor.constraint(equalTo: commentCountView.leadingAnchor, constant: -8),
             viewCountLabel.centerYAnchor.constraint(equalTo: commentCountView.centerYAnchor),
-
+            
             // Comment count
             commentCountView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             commentCountView.centerYAnchor.constraint(equalTo: voteView.centerYAnchor)
         ])
+        
     }
 
-    func configure(with post: Post, voteService: VoteService, userService: UserService) {
+    func configure(with post: Post, showInfo: Bool, startTitleView: UIView, voteService: VoteService, userService: UserService) {
+        
         displayNameLabel.text = post.user.name
         usernameLabel.text = "@\(post.user.login)"
         creationTimeLabel.text = "\u{00B7} \(post.creationTime.formattedDate())"
         titleLabel.text = post.title
         textLabel.text = post.text
+        showInfoFlag = showInfo
+        titleView = startTitleView
         viewCountLabel.text = "\(post.viewCount) views"
+
         
         if let countLabel = (commentCountView.subviews.first as? UIStackView)?.arrangedSubviews.last as? UILabel {
             countLabel.text = "\(post.discussionCount)"
@@ -155,5 +195,8 @@ class PostView: UIView {
             voteService: voteService,
             userService: userService
         )
+        
+        
+        setupView()
     }
 }

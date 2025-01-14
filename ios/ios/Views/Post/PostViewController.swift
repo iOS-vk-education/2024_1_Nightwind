@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class PostViewController: UIViewController {
+    private let postService: PostService
     private let discussionService: DiscussionService
     private let voteService: VoteService
     private let userService: UserService
@@ -16,6 +17,9 @@ class PostViewController: UIViewController {
     private var inputTextFieldBottomConstraint: NSLayoutConstraint!
     
     private let tableView = UITableView()
+    private var startTitleView: UIView = UIView()
+    private var scrollTitleView: UIView = UIView()
+    
     private let inputTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Start a discussion"
@@ -38,13 +42,14 @@ class PostViewController: UIViewController {
     private var post: Post
     private var discussions: [Discussion] = []
     
-    init(post: Post, discussionService: DiscussionService, voteService: VoteService, userService: UserService) {
+    init(post: Post, discussionService: DiscussionService, voteService: VoteService, userService: UserService, postService: PostService) {
         self.post = post
         self.discussionService = discussionService
         self.voteService = voteService
         self.userService = userService
+        self.postService = postService
         super.init(nibName: nil, bundle: nil)
-        
+        self.createTitles()
         update()
     }
     
@@ -52,8 +57,24 @@ class PostViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Styles.Light.base)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        let backImage = UIImage(systemName: "arrow.backward")?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        backImage?.withTintColor(.black)
+        self.navigationItem.leftBarButtonItem =
+            UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(backButtonTapped))
+        
+    
+        self.navigationItem.titleView = startTitleView;
         
         setupUI()
         setupConstraints()
@@ -65,6 +86,52 @@ class PostViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
+    
+    @objc private func backButtonTapped() {
+        self.tabBarController?.tabBar.isHidden = false
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func createTitles() {
+        startTitleView = UIView()
+        startTitleView.translatesAutoresizingMaskIntoConstraints = false
+        startTitleView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        startTitleView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        scrollTitleView = UIView()
+        scrollTitleView.translatesAutoresizingMaskIntoConstraints = false
+        scrollTitleView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        scrollTitleView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        
+        let titleLabel = UILabel()
+        titleLabel.text = post.title
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.textAlignment = .left
+        titleLabel.textColor = .black
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+                             
+        let infoLabel = UILabel()
+        infoLabel.text = "by @" + post.user.login + " " + post.creationTime.formattedDate()
+        infoLabel.font = UIFont.systemFont(ofSize: 12)
+        infoLabel.textAlignment = .left
+        infoLabel.textColor = .lightGray
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+       
+        scrollTitleView.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: scrollTitleView.leadingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: scrollTitleView.topAnchor),
+        ])
+        
+        scrollTitleView.addSubview(infoLabel)
+        NSLayoutConstraint.activate([
+            infoLabel.leadingAnchor.constraint(equalTo: scrollTitleView.leadingAnchor),
+            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
+        ])
+    
+    }
+
 }
 
 // MARK: - Private
@@ -72,6 +139,7 @@ extension PostViewController {
     private func update() {
         Task {
             do {
+                post = try await postService.getPostById(postId: post.id, jwt: userService.getJwt()!)
                 discussions = try await discussionService.getDiscussionsForPost(postId: post.id)
                 tableView.reloadData()
             } catch {}
@@ -160,7 +228,7 @@ extension PostViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: post, voteService: voteService, userService: userService)
+            cell.configure(with: post, showInfo: false, startTitleView: startTitleView, voteService: voteService, userService: userService)
             return cell
         } else {
             // Discussion
@@ -207,5 +275,10 @@ extension PostViewController: UITextFieldDelegate {
 extension PostViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollToTopButton.isHidden = scrollView.contentOffset.y < tableView.rectForRow(at: IndexPath(row: 0, section: 0)).maxY
+        if scrollView.contentOffset.y > 0 && navigationItem.titleView != scrollTitleView {
+            navigationItem.titleView = scrollTitleView
+        } else if scrollView.contentOffset.y <= 0 && navigationItem.titleView != startTitleView {
+            navigationItem.titleView = startTitleView
+        }
     }
 }

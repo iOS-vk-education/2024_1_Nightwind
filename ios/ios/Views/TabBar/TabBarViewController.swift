@@ -32,26 +32,24 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         setAppereance()
         generateTabBar()
-        
-        self.navigationItem.hidesBackButton = true
-        if let navigationController = navigationController {
-            navigationController.interactivePopGestureRecognizer?.isEnabled = false
-        }
     }
     
     
     private func generateTabBar() {
         viewControllers = [
             generateViewController(
-                viewController: MainViewController(userService: userService, postService: postService, discussionService: discussionService, voteService: voteService),
+                viewController: UINavigationController(rootViewController:
+                    MainViewController(userService: userService, postService: postService, discussionService: discussionService, voteService: voteService)),
                 title: "Posts",
                 image: UIImage(systemName: "list.bullet.clipboard")),
             generateViewController(
-                viewController: WritePostViewController(userService: userService, postService: postService),
+                viewController: UINavigationController(rootViewController:
+                                                        WritePostViewController(userService: userService, postService: postService, voteService: voteService, discussionService: discussionService)),
                 title: "Write Post",
                 image: UIImage(systemName: "square.and.pencil")),
             generateViewController(
-                viewController: UserViewController(userService: userService),
+                viewController: UINavigationController(rootViewController:
+                    UserViewController(userService: userService)),
                 title: "User",
                 image: UIImage(systemName: "person.crop.circle")
             )
@@ -74,14 +72,5 @@ class TabBarViewController: UITabBarController {
     }
 }
 
-extension UIImage {
-    convenience init(view: UIView) {
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in:UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
-    }
-}
 
                 
