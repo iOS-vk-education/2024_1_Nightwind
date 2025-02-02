@@ -106,4 +106,59 @@ public class DiscussionController {
         Discussion savedDiscussion = discussionService.writeDiscussion(discussion);
         return ResponseEntity.status(201).body(savedDiscussion);  // 201 Created
     }
+
+    @Operation(summary = "Delete a discussion",
+            description = "Deletes the specified discussion. Only the author or an admin can perform this action.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Discussion deleted successfully"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized access"),
+            @ApiResponse(responseCode = "403", description = "Forbidden action"),
+            @ApiResponse(responseCode = "404", description = "Discussion not found")
+    })
+    @DeleteMapping("discussions/{id}")
+    public ResponseEntity<Void> deleteDiscussion(
+            @Parameter(description = "ID of the discussion to delete", required = true)
+            @PathVariable long id,
+            @Parameter(description = "JWT token for authentication", required = true)
+            @RequestParam String jwt) {
+        User authenticatedUser = userService.findByJwt(jwt);
+        if (authenticatedUser == null) {
+            return ResponseEntity.status(401).build(); // 401 Unauthorized
+        }
+
+        Discussion discussionToDelete = discussionService.findById(id);
+        if (discussionToDelete == null) {
+            return ResponseEntity.status(404).build(); // 404 Not found
+        }
+
+        if (authenticatedUser.getId() != discussionToDelete.getUser().getId() && !authenticatedUser.isAdmin()) {
+            return ResponseEntity.status(403).build(); // 403 Forbidden
+        }
+
+        discussionService.deleteDiscussionById(id);
+        return ResponseEntity.ok().build(); // 200 Ok
+    }
+
+    @Operation(summary = "Retrieve all discussions by user ID",
+            description = "Fetches a list of discussions created by a specific user.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user's discussions"),
+            @ApiResponse(responseCode = "400", description = "Invalid user ID provided"),
+            @ApiResponse(responseCode = "404", description = "No discussions found for the specified user")
+    })
+    @GetMapping("/discussions/user/{userId}")
+    public ResponseEntity<List<Discussion>> findDiscussionsByUserId(
+            @Parameter(description = "ID of the user whose discussions are to be retrieved", required = true)
+            @PathVariable Long userId) {
+        if (userId == null || userId <= 0) {
+            return ResponseEntity.badRequest().build(); // 400 Bad Request
+        }
+
+        List<Discussion> discussions = discussionService.findAllByUserId(userId);
+        if (discussions == null || discussions.isEmpty()) {
+            return ResponseEntity.status(404).build(); // 404 Not Found
+        }
+
+        return ResponseEntity.ok(discussions); // 200 OK
+    }
 }

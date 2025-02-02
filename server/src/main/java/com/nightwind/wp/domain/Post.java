@@ -88,8 +88,12 @@ public class Post {
         this.discussions = discussions;
     }
 
+    public long getDiscussionCount() {
+    	return discussions.size();
+    }
+
     public long getVoteCount() {
-        return votes.size();
+        return votes.stream().mapToLong((vote) -> vote.isUpvote() ? 1 : -1).sum();
     }
 
     public long getViewCount() {

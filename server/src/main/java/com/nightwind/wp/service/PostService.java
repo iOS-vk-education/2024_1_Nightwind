@@ -1,6 +1,6 @@
 package com.nightwind.wp.service;
 
-import com.nightwind.wp.ConfigProperties;
+import com.nightwind.wp.config.PropertiesConfig;
 import org.springframework.stereotype.Service;
 import com.nightwind.wp.domain.Post;
 import com.nightwind.wp.domain.User;
@@ -14,16 +14,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class PostService {
-    private final ConfigProperties configProperties;
-
+    private final PropertiesConfig propertiesConfig;
     private final PostRepository postRepository;
 
-    public PostService(ConfigProperties configProperties,
+    private final Map<Long, Map<String, Long>> viewTimestamps = new ConcurrentHashMap<>();
+
+    public PostService(PropertiesConfig propertiesConfig,
                        PostRepository postRepository) {
-        this.configProperties = configProperties;
+        this.propertiesConfig = propertiesConfig;
         this.postRepository = postRepository;
     }
 
@@ -47,15 +51,32 @@ public class PostService {
         return post;
     }
 
-    public Post getAndIncrementViewCount(Long postId) {
+    public Post getAndIncrementViewCount(Long postId, String viewerIdentifier) {
         Post post = postRepository.findById(postId).orElse(null);
 
-        if (post != null) {
+        if (post != null && shouldIncrementView(postId, viewerIdentifier)) {
             post.incrementViewCount();
             postRepository.save(post);
         }
 
         return post;
+    }
+
+    private boolean shouldIncrementView(long postId, String viewerIdentifier) {
+        long currentTime = System.currentTimeMillis();
+        long viewLimit = TimeUnit.MINUTES.toMillis(10);
+
+        viewTimestamps.putIfAbsent(postId, new ConcurrentHashMap<>());
+        Map<String, Long> postViews = viewTimestamps.get(postId);
+
+        Long lastViewTime = postViews.get(viewerIdentifier);
+
+        if (lastViewTime == null || currentTime - lastViewTime > viewLimit) {
+            postViews.put(viewerIdentifier, currentTime);
+            return true;
+        }
+
+        return false;
     }
 
     private List<String> saveMediaAndGetKeys(List<MultipartFile> media, String keyPrefix) throws IOException {
@@ -66,7 +87,7 @@ public class PostService {
         }
 
         // Get the directory path from config properties
-        Path uploadDir = Paths.get(configProperties.getMediaDir());
+        Path uploadDir = Paths.get(propertiesConfig.getMediaDir());
 
         // Ensure the directory exists
         if (!Files.exists(uploadDir)) {
@@ -100,5 +121,13 @@ public class PostService {
         }
 
         return keys;
+    }
+
+    public void deletePostById(long id) {
+        postRepository.deleteById(id);
+    }
+
+    public List<Post> findAllByUserId(Long userId) {
+        return postRepository.findAllByUserId(userId);
     }
 }

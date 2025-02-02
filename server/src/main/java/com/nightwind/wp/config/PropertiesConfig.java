@@ -1,11 +1,12 @@
-package com.nightwind.wp;
+package com.nightwind.wp.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "config")
-public class ConfigProperties {
+@SuppressWarnings("unused")
+public class PropertiesConfig {
     private String mediaDir;
     private String jwtSecret;
     private String shaSalt;

@@ -63,8 +63,8 @@ public class Discussion {
         this.post = post;
     }
 
-    public long getParentDiscussionId() {
-        return parentDiscussion.getId();
+    public Long getParentDiscussionId() {
+        return parentDiscussion != null ? parentDiscussion.getId() : null;
     }
 
     public void setParentDiscussion(Discussion parentDiscussion) {
@@ -80,7 +80,7 @@ public class Discussion {
     }
 
     public long getVoteCount() {
-        return votes.size();
+        return votes.stream().mapToLong((vote) -> vote.isUpvote() ? 1 : -1).sum();
     }
 
     public Date getCreationTime() {

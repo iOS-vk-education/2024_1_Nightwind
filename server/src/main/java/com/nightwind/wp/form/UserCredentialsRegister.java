@@ -7,17 +7,17 @@ import jakarta.validation.constraints.Size;
 
 public class UserCredentialsRegister {
 
-    @NotBlank
-    @Size(min = 1, max = 100)
+    @NotBlank(message = "Name cannot not be blank")
+    @Size(min = 1, max = 64, message = "Name must be of size between 1 and 64 characters")
     private String name;
 
-    @NotBlank
-    @Size(min = 2, max = 24)
-    @Pattern(regexp = "[a-zA-Z]{2,24}", message = "Expected Latin letters")
+    @NotBlank(message = "Login cannot not be blank")
+    @Size(min = 2, max = 24, message = "Login must be of size between 2 and 24 characters")
+    @Pattern(regexp = "[a-zA-Z]{2,24}", message = "Login must only contain latin letters")
     private String login;
 
-    @NotEmpty
-    @Size(min = 1, max = 60)
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 8, max = 60, message = "Password must be of size between 8 and 60 characters")
     private String password;
 
     public String getName() {
